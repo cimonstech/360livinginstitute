@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import SignupForm from '@/components/auth/SignupForm'
+import { canonicalPath, privatePageRobots } from '@/lib/seo'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export const metadata = { title: 'Create Account | 360 Living Institute' }
+export const metadata: Metadata = {
+  title: 'Create Account | 360 Living Institute',
+  description: 'Create your 360 Living Institute account to book sessions and access your client portal.',
+  ...privatePageRobots(),
+  alternates: canonicalPath('/signup'),
+}
 
 export default function SignupPage() {
   return (

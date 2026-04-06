@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
+import { canonicalPath, rootOpenGraphDefaults, rootTwitterDefaults } from '@/lib/seo'
 import Navbar from '@/components/layout/Navbar'
 import EventsExperience from '@/components/events/EventsExperience'
 import PastEvents from '@/components/events/PastEvents'
@@ -11,6 +12,20 @@ export const metadata: Metadata = {
   title: 'Events & Programs | 360 Living Institute',
   description:
     'Workshops, webinars, cohorts, and signature programs from 360 Living Institute. Join a community growing toward wholeness.',
+  alternates: canonicalPath('/events'),
+  openGraph: {
+    ...rootOpenGraphDefaults,
+    title: 'Events & Programs | 360 Living Institute',
+    description:
+      'Workshops, webinars, cohorts, and signature programs from 360 Living Institute. Join a community growing toward wholeness.',
+    url: '/events',
+  },
+  twitter: {
+    ...rootTwitterDefaults,
+    title: 'Events & Programs | 360 Living Institute',
+    description:
+      'Workshops, webinars, cohorts, and signature programs from 360 Living Institute. Join a community growing toward wholeness.',
+  },
 }
 
 export default async function EventsPage() {

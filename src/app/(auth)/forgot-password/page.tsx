@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm'
+import { canonicalPath, privatePageRobots } from '@/lib/seo'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export const metadata = { title: 'Reset Password | 360 Living Institute' }
+export const metadata: Metadata = {
+  title: 'Reset Password | 360 Living Institute',
+  description: 'Request a link to reset your 360 Living Institute account password.',
+  ...privatePageRobots(),
+  alternates: canonicalPath('/forgot-password'),
+}
 
 export default function ForgotPasswordPage() {
   return (

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/layout/Navbar'
 import Hero from '@/components/homepage/Hero'
 import TrustBar from '@/components/homepage/TrustBar'
@@ -9,6 +10,27 @@ import CTASection from '@/components/homepage/CTASection'
 import Footer from '@/components/layout/Footer'
 import StripAuthErrorQuery from '@/components/homepage/StripAuthErrorQuery'
 import Link from 'next/link'
+import { canonicalPath, rootOpenGraphDefaults, rootTwitterDefaults } from '@/lib/seo'
+
+export const metadata: Metadata = {
+  title: '360 Living Institute',
+  description:
+    'Transforming Lives Through Psychological Insight & Life Development. Counselling, life transition support, and corporate wellness in Accra, Ghana.',
+  alternates: canonicalPath('/'),
+  openGraph: {
+    ...rootOpenGraphDefaults,
+    title: '360 Living Institute',
+    description:
+      'Transforming Lives Through Psychological Insight & Life Development. Counselling, life transition support, and corporate wellness in Accra, Ghana.',
+    url: '/',
+  },
+  twitter: {
+    ...rootTwitterDefaults,
+    title: '360 Living Institute',
+    description:
+      'Transforming Lives Through Psychological Insight & Life Development. Counselling, life transition support, and corporate wellness in Accra, Ghana.',
+  },
+}
 
 type HomeProps = {
   searchParams: Promise<{ error?: string; reason?: string }>

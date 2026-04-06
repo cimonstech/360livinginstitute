@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/layout/Navbar'
+import { canonicalPath, rootOpenGraphDefaults, rootTwitterDefaults } from '@/lib/seo'
 import ContactHero from '@/components/contact/ContactHero'
 import ContactForm from '@/components/contact/ContactForm'
 import ContactInfo from '@/components/contact/ContactInfo'
@@ -9,6 +10,20 @@ export const metadata: Metadata = {
   title: 'Contact Us | 360 Living Institute',
   description:
     'Get in touch with 360 Living Institute. Book a session, partner with us, invite us to speak, or simply reach out.',
+  alternates: canonicalPath('/contact'),
+  openGraph: {
+    ...rootOpenGraphDefaults,
+    title: 'Contact Us | 360 Living Institute',
+    description:
+      'Get in touch with 360 Living Institute. Book a session, partner with us, invite us to speak, or simply reach out.',
+    url: '/contact',
+  },
+  twitter: {
+    ...rootTwitterDefaults,
+    title: 'Contact Us | 360 Living Institute',
+    description:
+      'Get in touch with 360 Living Institute. Book a session, partner with us, invite us to speak, or simply reach out.',
+  },
 }
 
 export default function ContactPage() {

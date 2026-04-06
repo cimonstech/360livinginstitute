@@ -3,17 +3,31 @@ import Link from 'next/link'
 
 const overlayAvatars = [1, 2, 3] as const
 
-const team = [
+type TeamMember =
+  | {
+      name: string
+      role: string
+      imageSrc: string
+      pills: readonly string[]
+    }
+  | {
+      name: string
+      role: string
+      avatar: number
+      pills: readonly string[]
+    }
+
+const team: TeamMember[] = [
   {
     name: 'Selasi Doku',
     role: 'Executive Director & CEO',
-    avatar: 4,
+    imageSrc: '/images/SelasiDoku2.jpeg',
     pills: ['Counselling', 'Life Transitions'],
   },
   {
     name: 'Rev. Angela Appiah',
     role: 'Board Chairperson',
-    avatar: 5,
+    imageSrc: '/images/Rev.Angela2.jpeg',
     pills: ['Governance', 'Leadership'],
   },
   {
@@ -22,7 +36,7 @@ const team = [
     avatar: 6,
     pills: ['Corporate', 'Strategy'],
   },
-] as const
+]
 
 export default function MeetExperts() {
   return (
@@ -65,7 +79,7 @@ export default function MeetExperts() {
         <div>
           <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">Experts</p>
           <h2 className="mt-3 font-lora text-3xl font-normal text-charcoal lg:text-4xl">
-            Meet Our Mental Health Experts
+            Meet Our Health Experts
           </h2>
           <p className="mt-4 font-dm text-sm font-light leading-relaxed text-charcoal-muted">
             Our team of psychologists and therapists bring compassion and science together to help you achieve emotional
@@ -76,7 +90,7 @@ export default function MeetExperts() {
             {team.map((member) => (
               <li key={member.name} className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <Image
-                  src={`/images/members/person${member.avatar}.webp`}
+                  src={'imageSrc' in member ? member.imageSrc : `/images/members/person${member.avatar}.webp`}
                   alt=""
                   width={48}
                   height={48}

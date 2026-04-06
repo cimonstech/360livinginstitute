@@ -1,9 +1,16 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import LoginForm from '@/components/auth/LoginForm'
+import { canonicalPath, privatePageRobots } from '@/lib/seo'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export const metadata = { title: 'Sign In | 360 Living Institute' }
+export const metadata: Metadata = {
+  title: 'Sign In | 360 Living Institute',
+  description: 'Sign in to your 360 Living Institute account to manage bookings and access your dashboard.',
+  ...privatePageRobots(),
+  alternates: canonicalPath('/login'),
+}
 
 export default function LoginPage() {
   return (

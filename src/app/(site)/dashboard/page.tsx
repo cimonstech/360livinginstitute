@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import { canonicalPath, privatePageRobots } from '@/lib/seo'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Navbar from '@/components/layout/Navbar'
@@ -8,7 +9,12 @@ import Footer from '@/components/layout/Footer'
 import type { Appointment, DashboardEventRegistration, Profile } from '@/types'
 import { ensureProfileRowForUser } from '@/lib/profile-bootstrap'
 
-export const metadata: Metadata = { title: 'My Bookings | 360 Living Institute' }
+export const metadata: Metadata = {
+  title: 'My Bookings | 360 Living Institute',
+  description: 'View and manage your appointments at 360 Living Institute.',
+  ...privatePageRobots(),
+  alternates: canonicalPath('/dashboard'),
+}
 
 export default async function DashboardPage() {
   const supabase = await createClient()

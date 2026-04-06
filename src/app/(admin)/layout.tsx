@@ -1,9 +1,16 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
+import { privatePageRobots } from '@/lib/seo'
 import { ensureProfileRowForUser } from '@/lib/profile-bootstrap'
 import { redirect } from 'next/navigation'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import AdminTopbar from '@/components/admin/AdminTopbar'
 import type { Profile } from '@/types'
+
+export const metadata: Metadata = {
+  title: 'Admin | 360 Living Institute',
+  ...privatePageRobots(),
+}
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
