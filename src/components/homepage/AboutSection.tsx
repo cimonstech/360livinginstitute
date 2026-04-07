@@ -9,7 +9,7 @@ export default function AboutSection() {
         <div className="order-2 text-center lg:order-1 lg:text-left">
           <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">Who We Are</p>
           <h2 className="mt-3 font-lora text-3xl font-normal leading-snug text-charcoal lg:text-4xl">
-            People don&apos;t just need solutions — they need{' '}
+            People don&apos;t just need solutions, they need{' '}
             <em className="font-lora italic text-brand-pink">understanding.</em>
           </h2>
           <p className="mx-auto mt-4 max-w-md font-dm text-sm font-light leading-relaxed text-charcoal-muted lg:mx-0">
@@ -48,7 +48,7 @@ export default function AboutSection() {
               href="/team"
               className="rounded-full border border-charcoal/25 px-6 py-3 font-dm text-sm font-normal text-charcoal transition-colors hover:border-brand-pink/40"
             >
-              Meet The Team
+              Meet The Board Members
             </Link>
           </div>
         </div>

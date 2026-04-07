@@ -36,13 +36,7 @@ export default function BookingWizard() {
   const prefillDoneRef = useRef(false)
 
   function sessionPriceGhs(service: Service | null, pricing: PricingSettings | null): number | null {
-    if (!pricing?.show_prices) return null
-    if (!service) return Number(pricing.global_price_ghs)
-    const useGlobal = service.use_global_price !== false
-    if (useGlobal) return Number(pricing.global_price_ghs)
-    const o = service.price_override_ghs
-    if (o == null || Number.isNaN(Number(o))) return Number(pricing.global_price_ghs)
-    return Number(o)
+    return null
   }
 
   const mergeFormData = useCallback((patch: Partial<BookingFormData>) => {
@@ -86,10 +80,12 @@ export default function BookingWizard() {
   }, [step])
 
   const selectService = (s: Service) => {
+    const serviceTitle =
+      s.slug === 'life-transition-counselling' ? '360 Transition Reset Program' : s.title
     setSelectedService(s)
     mergeFormData({
       service_id: s.id,
-      service_title: s.title,
+      service_title: serviceTitle,
       duration_minutes: s.duration_minutes,
     })
   }
@@ -163,7 +159,7 @@ export default function BookingWizard() {
           email: formData.client_email!,
           password: formData.password,
           options: {
-            data: { full_name: formData.client_name, role: 'client' },
+            data: { full_name: formData.client_name, phone: formData.client_phone ?? '', role: 'client' },
             emailRedirectTo: `${window.location.origin}/auth/callback`,
           },
         })

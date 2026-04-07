@@ -50,6 +50,10 @@ export async function ensureProfileRowForUser(userId: string): Promise<ProfileRo
     email.split('@')[0] ||
     'User'
 
+  const phone =
+    (typeof u.user_metadata?.phone === 'string' && u.user_metadata.phone.trim()) ||
+    null
+
   const appRole = u.app_metadata?.role
   const allowlist = staffAdminEmails()
   let role: 'admin' | 'client' = 'client'
@@ -64,6 +68,7 @@ export async function ensureProfileRowForUser(userId: string): Promise<ProfileRo
         full_name: fullName,
         email,
         role,
+        phone,
       },
       { onConflict: 'id' }
     )

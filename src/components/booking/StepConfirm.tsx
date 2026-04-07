@@ -54,12 +54,6 @@ export default function StepConfirm({ formData, pricing, sessionPriceGhs }: Prop
             </dd>
           </div>
           <div>
-            <dt className="text-charcoal-muted text-xs">Duration</dt>
-            <dd className="text-charcoal font-medium">
-              {formData.duration_minutes != null ? `${formData.duration_minutes} minutes` : '—'}
-            </dd>
-          </div>
-          <div>
             <dt className="text-charcoal-muted text-xs">Name</dt>
             <dd className="text-charcoal font-medium">{formData.client_name ?? '—'}</dd>
           </div>

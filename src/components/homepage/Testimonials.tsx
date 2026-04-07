@@ -14,18 +14,8 @@ export default function Testimonials() {
                   tools, and a renewed sense of purpose. The counselling sessions were deeply personal and
                   transformative.&rdquo;
                 </p>
-                <div className="mt-4 flex items-center gap-3">
-                  <Image
-                    src="/images/members/person1.webp"
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 rounded-full object-cover"
-                  />
-                  <div>
-                    <p className="font-dm text-sm text-white">Abena Asante, Accra</p>
-                    <p className="font-dm text-xs text-white/50">Individual Counselling Client</p>
-                  </div>
+                <div className="mt-4">
+                  <p className="font-dm text-xs text-white/50">Individual Counselling Client</p>
                 </div>
               </article>
 
@@ -34,18 +24,8 @@ export default function Testimonials() {
                   &ldquo;As an entrepreneur, I was burning out fast. The wellness program helped me realign my priorities. I
                   now lead my team with more clarity, empathy, and resilience than ever before.&rdquo;
                 </p>
-                <div className="mt-4 flex items-center gap-3">
-                  <Image
-                    src="/images/members/person2.webp"
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 rounded-full object-cover"
-                  />
-                  <div>
-                    <p className="font-dm text-sm text-white">Kwame Mensah, Tema</p>
-                    <p className="font-dm text-xs text-white/50">Entrepreneur Wellness Client</p>
-                  </div>
+                <div className="mt-4">
+                  <p className="font-dm text-xs text-white/50">Entrepreneur Wellness Client</p>
                 </div>
               </article>
             </div>
@@ -62,19 +42,7 @@ export default function Testimonials() {
               />
             </div>
             <article className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/images/members/person3.webp"
-                  alt=""
-                  width={32}
-                  height={32}
-                  className="h-8 w-8 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-dm text-sm text-white">Brandon Armor</p>
-                  <p className="font-dm text-xs text-white/50">Behavioural Therapist</p>
-                </div>
-              </div>
+              <p className="font-dm text-xs text-white/50">Behavioural Therapist</p>
               <div className="mt-3 flex items-center gap-2">
                 <span className="font-dm text-sm text-amber-400" aria-hidden>
                   ★★★★★

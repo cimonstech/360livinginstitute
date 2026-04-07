@@ -4,6 +4,13 @@ import { assertAdminSession } from '@/lib/assert-admin'
 import { NextRequest, NextResponse } from 'next/server'
 import { sendBookingConfirmed, sendBookingCancelled } from '@/lib/email'
 import { sanitizeLongText, sanitizeString, sanitizeUuid } from '@/lib/sanitize'
+import { z } from 'zod'
+
+const PatchSchema = z.object({
+  status: z.enum(['pending', 'confirmed', 'cancelled', 'completed', 'no_show']).optional(),
+  admin_notes: z.string().nullable().optional(),
+  cancellation_reason: z.string().nullable().optional(),
+})
 
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await assertAdminSession()
@@ -17,11 +24,25 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     return NextResponse.json({ error: 'Invalid id' }, { status: 400 })
   }
 
-  const body = (await request.json()) as Record<string, unknown>
-  const status = body.status !== undefined ? sanitizeString(body.status) : undefined
-  const admin_notes = body.admin_notes !== undefined ? sanitizeLongText(body.admin_notes) || null : undefined
+  let raw: unknown
+  try {
+    raw = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+  }
+
+  const parsed = PatchSchema.safeParse(raw)
+  if (!parsed.success) {
+    return NextResponse.json({ error: 'Invalid patch payload' }, { status: 400 })
+  }
+
+  const status = parsed.data.status !== undefined ? sanitizeString(parsed.data.status) : undefined
+  const admin_notes =
+    parsed.data.admin_notes !== undefined ? sanitizeLongText(parsed.data.admin_notes) || null : undefined
   const cancellation_reason =
-    body.cancellation_reason !== undefined ? sanitizeLongText(body.cancellation_reason) || null : undefined
+    parsed.data.cancellation_reason !== undefined
+      ? sanitizeLongText(parsed.data.cancellation_reason) || null
+      : undefined
 
   const supabase = await createClient()
   const { data: appointment } = await supabase.from('appointments').select('*').eq('id', id).single()

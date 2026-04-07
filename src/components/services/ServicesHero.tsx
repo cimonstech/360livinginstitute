@@ -33,29 +33,7 @@ export default function ServicesHero() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3 lg:justify-end">
-          <div className="flex items-center gap-2 rounded-full border border-gray-100 bg-white px-5 py-3">
-            <Users className="text-brand-green" size={14} strokeWidth={1.75} aria-hidden />
-            <div className="leading-tight">
-              <p className="font-dm text-sm font-medium text-charcoal">500+</p>
-              <p className="font-dm text-xs text-charcoal-muted">Lives Supported</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 rounded-full border border-gray-100 bg-white px-5 py-3">
-            <Briefcase className="text-brand-pink" size={14} strokeWidth={1.75} aria-hidden />
-            <div className="leading-tight">
-              <p className="font-dm text-sm font-medium text-charcoal">50+</p>
-              <p className="font-dm text-xs text-charcoal-muted">Corporate Partners</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 rounded-full border border-gray-100 bg-white px-5 py-3">
-            <Star className="text-brand-green" size={14} strokeWidth={1.75} aria-hidden />
-            <div className="leading-tight">
-              <p className="font-dm text-sm font-medium text-charcoal">6+</p>
-              <p className="font-dm text-xs text-charcoal-muted">Specialist Services</p>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
   )

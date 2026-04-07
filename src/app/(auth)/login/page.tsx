@@ -17,7 +17,7 @@ export default function LoginPage() {
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
       <div className="flex flex-col justify-center px-8 lg:px-16 py-16">
         <Link href="/" className="mb-12">
-          <Image src="/images/logo.png" alt="360 Living Institute" width={120} height={40} className="h-10 w-auto" />
+          <Image src="/images/logo2.png" alt="360 Living Institute" width={120} height={40} className="h-10 w-auto" />
         </Link>
         <p className="text-xs font-medium tracking-widest uppercase text-brand-pink mb-2">Welcome back</p>
         <h1 className="font-lora text-3xl font-normal text-charcoal mb-2">Sign in to your account</h1>

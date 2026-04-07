@@ -218,7 +218,7 @@ export default function Navbar() {
         <div className="relative mx-auto flex h-16 max-w-7xl items-center gap-4 px-6 lg:px-10">
           <Link href="/" className="relative h-9 w-[140px] flex-shrink-0">
             <Image
-              src="/images/logo.png"
+              src="/images/logo2.png"
               alt="360 Living Institute"
               fill
               className="object-contain object-left"

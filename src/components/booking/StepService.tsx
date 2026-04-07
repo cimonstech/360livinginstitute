@@ -57,17 +57,13 @@ function logSupabaseError(prefix: string, err: unknown, fields: ErrorFields) {
   }
 }
 
-function formatPriceGhs(amount: number) {
-  return `GHS ${amount.toFixed(2)}`
+function servicePriceLabel(service: Service, pricing: PricingSettings | null) {
+  return null
 }
 
-function servicePriceLabel(service: Service, pricing: PricingSettings | null) {
-  if (!pricing?.show_prices) return null
-  const useGlobal = service.use_global_price !== false
-  if (useGlobal) return formatPriceGhs(Number(pricing.global_price_ghs))
-  const o = service.price_override_ghs
-  if (o == null || Number.isNaN(Number(o))) return formatPriceGhs(Number(pricing.global_price_ghs))
-  return formatPriceGhs(Number(o))
+function displayServiceTitle(service: Service) {
+  if (service.slug === 'life-transition-counselling') return '360 Transition Reset Program'
+  return service.title
 }
 
 export default function StepService({ onSelect, selected }: Props) {
@@ -208,14 +204,11 @@ export default function StepService({ onSelect, selected }: Props) {
                   <CheckCircle2 className="absolute top-4 right-4 text-brand-pink" size={16} aria-hidden />
                 )}
                 <div className="flex items-start justify-between gap-3 pr-6">
-                  <span className="font-lora text-base font-medium text-charcoal">{service.title}</span>
+                  <span className="font-lora text-base font-medium text-charcoal">{displayServiceTitle(service)}</span>
                   <div className="flex flex-shrink-0 flex-col items-end gap-1">
                     {priceLabel && (
                       <span className="font-lora text-lg font-medium text-brand-pink">{priceLabel}</span>
                     )}
-                    <span className="bg-charcoal-light text-charcoal-muted text-xs px-2 py-1 rounded-full font-dm">
-                      {service.duration_minutes} min
-                    </span>
                   </div>
                 </div>
                 {service.description && (

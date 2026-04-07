@@ -44,9 +44,9 @@ export default function AboutHero() {
             height={960}
             className="h-[480px] w-full rounded-2xl object-cover object-top"
           />
-          <div className="absolute right-4 top-4 rounded-full border border-brand-green-light bg-white px-3 py-1.5 text-xs font-medium text-brand-green shadow-sm">
+          {/* <div className="absolute right-4 top-4 rounded-full border border-brand-green-light bg-white px-3 py-1.5 text-xs font-medium text-brand-green shadow-sm">
             Est. 2020
-          </div>
+          </div> */}
           <div className="absolute bottom-4 left-4 flex items-center gap-3 rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
             <Users className="text-brand-green" size={18} strokeWidth={1.75} aria-hidden />
             <div>

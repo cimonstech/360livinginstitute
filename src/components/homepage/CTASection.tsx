@@ -173,19 +173,7 @@ export default function CTASection() {
               <p className="font-lora text-sm italic text-charcoal">
                 &ldquo;The most courageous thing you can do is ask for help. We are here.&rdquo;
               </p>
-              <div className="mt-3 flex items-center gap-2">
-                <Image
-                  src="/images/members/person4.webp"
-                  alt=""
-                  width={32}
-                  height={32}
-                  className="h-8 w-8 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-dm text-sm font-medium text-charcoal">Maame Warren</p>
-                  <p className="font-dm text-xs text-charcoal-muted">Wellness Client</p>
-                </div>
-              </div>
+              <p className="mt-3 font-dm text-xs text-charcoal-muted">Wellness Client</p>
             </div>
           </div>
         </div>

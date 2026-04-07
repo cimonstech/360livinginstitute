@@ -40,6 +40,7 @@ import {
   Upload,
 } from 'lucide-react'
 import type { BlogPost } from '@/types'
+import type { Media } from '@/types'
 
 interface Props {
   post?: BlogPost | null
@@ -49,6 +50,7 @@ export default function BlogEditor({ post }: Props) {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const coverInputRef = useRef<HTMLInputElement>(null)
+  const libraryUploadRef = useRef<HTMLInputElement>(null)
 
   const [title, setTitle] = useState(post?.title || '')
   const [slug, setSlug] = useState(post?.slug || '')
@@ -72,6 +74,13 @@ export default function BlogEditor({ post }: Props) {
   const [linkUrl, setLinkUrl] = useState('')
   const [showLinkInput, setShowLinkInput] = useState(false)
 
+  const [showMediaPicker, setShowMediaPicker] = useState(false)
+  const [mediaPickerTarget, setMediaPickerTarget] = useState<'editor' | 'cover'>('editor')
+  const [mediaFilter, setMediaFilter] = useState<'all' | 'blog' | 'event' | 'general'>('all')
+  const [mediaQuery, setMediaQuery] = useState('')
+  const [mediaItems, setMediaItems] = useState<Media[]>([])
+  const [loadingMedia, setLoadingMedia] = useState(false)
+
   useEffect(() => {
     if (!post && title) {
       setSlug(
@@ -91,6 +100,9 @@ export default function BlogEditor({ post }: Props) {
     extensions: [
       StarterKit.configure({
         heading: { levels: [1, 2, 3] },
+        // We provide our own configured Link + Underline extensions below.
+        link: false,
+        underline: false,
       }),
       TiptapImage.configure({
         inline: false,
@@ -154,6 +166,66 @@ export default function BlogEditor({ post }: Props) {
     },
     [editor]
   )
+
+  const insertFromLibrary = useCallback(
+    (m: Media) => {
+      if (mediaPickerTarget === 'cover') {
+        setCoverImageUrl(m.file_url)
+        setCoverImageAlt(m.alt_text || m.file_name)
+      } else {
+        if (!editor) return
+        editor.chain().focus().setImage({ src: m.file_url, alt: m.alt_text || '' }).run()
+      }
+      setShowMediaPicker(false)
+      setMediaQuery('')
+    },
+    [editor, mediaPickerTarget]
+  )
+
+  const loadMedia = useCallback(async () => {
+    setLoadingMedia(true)
+    try {
+      const qs = new URLSearchParams()
+      qs.set('used_in', mediaFilter)
+      qs.set('limit', '120')
+      const res = await fetch(`/api/media/list?${qs.toString()}`)
+      const j = (await res.json()) as { error?: string; media?: Media[] }
+      if (!res.ok) throw new Error(j.error || 'Failed to load media')
+      setMediaItems(j.media ?? [])
+    } catch (e) {
+      console.error('[BlogEditor] loadMedia', e)
+      setMediaItems([])
+      alert(e instanceof Error ? e.message : 'Failed to load media')
+    } finally {
+      setLoadingMedia(false)
+    }
+  }, [mediaFilter])
+
+  useEffect(() => {
+    if (!showMediaPicker) return
+    void loadMedia()
+  }, [showMediaPicker, loadMedia])
+
+  async function uploadToLibrary(files: FileList | null) {
+    if (!files?.length) return
+    setLoadingMedia(true)
+    try {
+      for (const file of Array.from(files)) {
+        const fd = new FormData()
+        fd.append('file', file)
+        fd.append('alt_text', file.name.replace(/\.[^.]+$/, ''))
+        fd.append('used_in', 'blog')
+        const res = await fetch('/api/media/upload', { method: 'POST', body: fd })
+        const j = await res.json()
+        if (!res.ok) throw new Error(j.error || 'Upload failed')
+      }
+      await loadMedia()
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Upload failed')
+    } finally {
+      setLoadingMedia(false)
+    }
+  }
 
   async function uploadCoverImage(file: File) {
     setUploadingCover(true)
@@ -533,6 +605,19 @@ export default function BlogEditor({ post }: Props) {
                     </ToolbarButton>
                   </ToolbarGroup>
 
+                  <ToolbarGroup>
+                    <ToolbarButton
+                      type="button"
+                      onClick={() => {
+                        setMediaPickerTarget('editor')
+                        setShowMediaPicker(true)
+                      }}
+                      title="Insert from Media Library"
+                    >
+                      <Upload size={14} />
+                    </ToolbarButton>
+                  </ToolbarGroup>
+
                   <div className="ml-auto px-2 text-xs text-charcoal-muted/60">{wordCount} words</div>
                 </div>
 
@@ -629,21 +714,33 @@ export default function BlogEditor({ post }: Props) {
                 />
               </div>
             ) : (
-              <button
-                type="button"
-                onClick={() => coverInputRef.current?.click()}
-                className="flex h-36 w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 transition-colors hover:border-brand-pink hover:bg-brand-pink-pale/30"
-              >
-                {uploadingCover ? (
-                  <Loader2 size={20} className="animate-spin text-brand-pink" />
-                ) : (
-                  <>
-                    <Upload size={20} className="mb-2 text-charcoal-muted/50" />
-                    <p className="text-xs text-charcoal-muted">Click to upload cover image</p>
-                    <p className="mt-1 text-xs text-charcoal-muted/50">JPG, PNG, WEBP up to 5MB</p>
-                  </>
-                )}
-              </button>
+              <div className="grid grid-cols-1 gap-2">
+                <button
+                  type="button"
+                  onClick={() => coverInputRef.current?.click()}
+                  className="flex h-28 w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 transition-colors hover:border-brand-pink hover:bg-brand-pink-pale/30"
+                >
+                  {uploadingCover ? (
+                    <Loader2 size={20} className="animate-spin text-brand-pink" />
+                  ) : (
+                    <>
+                      <Upload size={18} className="mb-2 text-charcoal-muted/50" />
+                      <p className="text-xs text-charcoal-muted">Upload from device</p>
+                    </>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMediaPickerTarget('cover')
+                    setShowMediaPicker(true)
+                  }}
+                  className="flex h-14 w-full items-center justify-center rounded-xl border border-gray-200 bg-white font-dm text-xs font-medium text-charcoal-muted transition-colors hover:bg-charcoal-light"
+                >
+                  Choose from Media Library
+                </button>
+                <p className="text-xs text-charcoal-muted/50">JPG, PNG, WEBP up to 5MB</p>
+              </div>
             )}
             <input
               ref={coverInputRef}
@@ -794,6 +891,135 @@ export default function BlogEditor({ post }: Props) {
           </div>
         </div>
       </div>
+
+      {showMediaPicker && (
+        <>
+          <div
+            className="fixed inset-0 z-50 bg-black/40"
+            aria-hidden
+            onClick={() => setShowMediaPicker(false)}
+          />
+          <div className="fixed left-1/2 top-1/2 z-[51] w-[min(920px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+              <div>
+                <p className="font-dm text-xs font-medium uppercase tracking-wider text-charcoal-muted">
+                  Media Library
+                </p>
+                <p className="font-lora text-lg text-charcoal">
+                  {mediaPickerTarget === 'cover' ? 'Select a cover image' : 'Insert an image'}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowMediaPicker(false)}
+                className="rounded-full border border-gray-200 bg-white p-2 hover:bg-charcoal-light"
+                aria-label="Close"
+              >
+                <X size={16} className="text-charcoal-muted" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-3 border-b border-gray-100 bg-charcoal-light/40 px-5 py-3 sm:flex-row sm:items-center">
+              <div className="flex flex-wrap gap-2">
+                {(['all', 'blog', 'event', 'general'] as const).map((f) => (
+                  <button
+                    key={f}
+                    type="button"
+                    onClick={() => setMediaFilter(f)}
+                    className={`rounded-full px-3 py-1.5 font-dm text-xs font-medium capitalize ${
+                      mediaFilter === f ? 'bg-brand-pink text-white' : 'border border-gray-200 bg-white text-charcoal-muted'
+                    }`}
+                  >
+                    {f === 'all' ? 'All' : f}
+                  </button>
+                ))}
+              </div>
+              <input
+                value={mediaQuery}
+                onChange={(e) => setMediaQuery(e.target.value)}
+                placeholder="Search..."
+                className="w-full rounded-full border border-gray-200 bg-white px-4 py-2 font-dm text-xs text-charcoal focus:border-brand-pink focus:outline-none sm:max-w-xs"
+              />
+              <div className="flex items-center gap-2 sm:ml-auto">
+                <button
+                  type="button"
+                  onClick={() => libraryUploadRef.current?.click()}
+                  className="rounded-full bg-brand-pink px-4 py-2 font-dm text-xs font-medium text-white hover:opacity-90"
+                >
+                  Upload
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void loadMedia()}
+                  className="rounded-full border border-gray-200 bg-white px-4 py-2 font-dm text-xs text-charcoal-muted hover:bg-charcoal-light"
+                >
+                  Refresh
+                </button>
+                <input
+                  ref={libraryUploadRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    void uploadToLibrary(e.target.files)
+                    e.target.value = ''
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="max-h-[70vh] overflow-y-auto p-5">
+              {loadingMedia ? (
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div key={i} className="aspect-square animate-pulse rounded-xl bg-charcoal-light" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+                  {mediaItems
+                    .filter((m) => {
+                      const q = mediaQuery.trim().toLowerCase()
+                      if (!q) return true
+                      return (
+                        m.file_name.toLowerCase().includes(q) ||
+                        (m.alt_text || '').toLowerCase().includes(q)
+                      )
+                    })
+                    .map((m) => (
+                      <button
+                        key={m.id}
+                        type="button"
+                        onClick={() => insertFromLibrary(m)}
+                        className="group relative aspect-square overflow-hidden rounded-xl border border-gray-100 bg-charcoal-light text-left"
+                        title="Select"
+                      >
+                        <NextImage
+                          src={m.file_url}
+                          alt={m.alt_text || m.file_name}
+                          fill
+                          className="object-cover"
+                          sizes="200px"
+                        />
+                        <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/30" aria-hidden />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
+                          <p className="truncate font-dm text-[11px] text-white">{m.file_name}</p>
+                        </div>
+                      </button>
+                    ))}
+                </div>
+              )}
+
+              {!loadingMedia && mediaItems.length === 0 && (
+                <p className="py-10 text-center font-dm text-sm text-charcoal-muted">
+                  No media yet. Upload an image to get started.
+                </p>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

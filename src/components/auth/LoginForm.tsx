@@ -52,7 +52,14 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex flex-col gap-4 max-w-sm">
+    <form
+      className="flex flex-col gap-4 max-w-sm"
+      onSubmit={(e) => {
+        e.preventDefault()
+        if (loading || !email || !password) return
+        void handleLogin()
+      }}
+    >
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">{error}</div>
       )}
@@ -91,8 +98,7 @@ export default function LoginForm() {
         </div>
       </div>
       <button
-        type="button"
-        onClick={handleLogin}
+        type="submit"
         disabled={loading || !email || !password}
         className="bg-brand-pink text-white rounded-full px-6 py-3 text-sm font-medium inline-flex items-center justify-center gap-2 hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-2"
       >
@@ -105,6 +111,6 @@ export default function LoginForm() {
           </>
         )}
       </button>
-    </div>
+    </form>
   )
 }

@@ -58,7 +58,7 @@ export default function AdminSidebar() {
       <div className="p-6 border-b border-white/10">
         <Link href="/admin" className="block">
           <Image
-            src="/images/logo.png"
+            src="/images/logo2.png"
             alt="360 Living Institute"
             width={100}
             height={34}

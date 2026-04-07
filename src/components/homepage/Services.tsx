@@ -19,7 +19,7 @@ const services = [
   },
   {
     slug: 'life-transition-counselling',
-    title: 'Life Transition Counselling',
+    title: '360 Transition Reset Program',
     summary: "Guiding you through life's turning points.",
   },
   {
@@ -75,7 +75,7 @@ export default function Services() {
                 {service.summary}
               </p>
               <Link
-                href={`/services/${service.slug}`}
+                href={`/services#${service.slug}`}
                 className="font-dm text-sm font-medium text-brand-pink transition-colors hover:underline"
               >
                 Learn more →

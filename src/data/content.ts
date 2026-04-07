@@ -138,7 +138,7 @@ export const services = [
   },
   {
     slug: "life-transition-counselling",
-    title: "Life Transition Counselling",
+    title: "360 Transition Reset Program",
     summary: "Guiding you through life's turning points.",
     body: "Life transitions often create confusion and emotional strain. We provide support through major shifts so you can move forward with clarity and purpose.",
     bullets: [

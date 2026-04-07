@@ -7,7 +7,7 @@ export default function OurModel() {
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <div className="relative">
             <Image
-              src="/images/portrait-handsome.avif"
+              src="/rncc.jpg"
               alt="Professional care at 360 Living Institute"
               width={800}
               height={920}
@@ -36,17 +36,7 @@ export default function OurModel() {
               enhance well-being, productivity, and sustainable growth. We position mental health as a key driver for
               personal, organisational, and national development.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <span className="rounded-full bg-brand-pink-pale px-4 py-2 font-dm text-xs font-medium text-brand-pink">
-                Relational Therapy
-              </span>
-              <span className="rounded-full bg-brand-green-pale px-4 py-2 font-dm text-xs font-medium text-brand-green">
-                Narrative Counselling
-              </span>
-              <span className="rounded-full bg-charcoal-light px-4 py-2 font-dm text-xs font-medium text-charcoal">
-                Cognitive Coaching
-              </span>
-            </div>
+          
           </div>
         </div>
       </div>

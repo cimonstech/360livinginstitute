@@ -50,12 +50,21 @@ export default function AboutCTA() {
             height={800}
             className="h-[400px] w-full object-cover object-top"
           />
-          <div className="absolute bottom-4 left-4 right-4 rounded-xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm">
+          <div className="absolute bottom-4 left-4 right-4 rounded-xl border border-white/20 bg-charcoal/70 p-5 backdrop-blur-sm">
             <p className="font-lora text-sm italic text-white">
               &ldquo;At 360 Living Institute, transformation is not an event; it is a process we walk with you, step by
               step.&rdquo;
             </p>
-            <p className="mt-3 font-dm text-xs text-white/60">— Selasi Doku, Executive Director</p>
+            <div className="mt-4 flex items-center gap-3">
+              <Image
+                src="/images/SelasiDoku_.jpeg"
+                alt=""
+                width={36}
+                height={36}
+                className="h-9 w-9 rounded-full object-cover"
+              />
+              <p className="font-dm text-xs text-white/80">— Selasi Doku, Executive Director</p>
+            </div>
           </div>
         </div>
       </div>

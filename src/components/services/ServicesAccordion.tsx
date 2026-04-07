@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 
 type Service = {
   num: string
+  slug: string
   title: string
   tag: string
   tagColor: 'pink' | 'green'
@@ -20,10 +21,11 @@ type Service = {
 const services: Service[] = [
   {
     num: '01',
+    slug: 'individual-counselling',
     title: 'Individual Counselling',
     tag: 'Personal',
     tagColor: 'pink',
-    image: '/images/portrait-gorgeous.avif',
+    image: '/images/services/individual-counseling.jpeg',
     body: 'We provide support for personal clarity, healing, and growth — assisting individuals in navigating anxiety, emotional overwhelm, self-discovery, life direction, and personal challenges.',
     bullets: [
       'Anxiety & emotional overwhelm',
@@ -35,10 +37,11 @@ const services: Service[] = [
   },
   {
     num: '02',
+    slug: 'corporate-mental-health',
     title: 'Corporate Mental Health & Wellness',
     tag: 'Corporate',
     tagColor: 'green',
-    image: '/images/warrengoldswain.jpg',
+    image: '/images/services/corporate.jpg',
     body: 'We partner with organisations to improve employee well-being, increase productivity and focus, reduce burnout and absenteeism, and build psychologically safe environments.',
     bullets: [
       'Workplace counselling support',
@@ -50,6 +53,7 @@ const services: Service[] = [
   },
   {
     num: '03',
+    slug: 'entrepreneur-wellness',
     title: 'Entrepreneur Wellness & Performance',
     tag: 'Business',
     tagColor: 'pink',
@@ -65,10 +69,11 @@ const services: Service[] = [
   },
   {
     num: '04',
-    title: 'Life Transition Counselling',
+    slug: 'life-transition-counselling',
+    title: '360 Transition Reset Program',
     tag: 'Transitions',
     tagColor: 'green',
-    image: '/images/beautiful-african-woman.jpg',
+    image: '/images/services/360transition-reset.jpg',
     body: 'Life transitions often create confusion and emotional strain. We support you through major shifts so you can move forward with clarity and purpose.',
     bullets: [
       'Career changes & reinvention',
@@ -80,10 +85,11 @@ const services: Service[] = [
   },
   {
     num: '05',
+    slug: 'family-relationship-counselling',
     title: 'Family & Relationship Counselling',
     tag: 'Family',
     tagColor: 'pink',
-    image: '/images/portrait-father.avif',
+    image: '/images/services/family.jpg',
     body: 'We address issues related to couples, parenting, family dynamics, communication, and conflict resolution to foster healthier, more connected relationships.',
     bullets: [
       'Couples counselling & communication',
@@ -95,10 +101,11 @@ const services: Service[] = [
   },
   {
     num: '06',
+    slug: 'psychoeducation-training',
     title: 'Psychoeducation & Training',
     tag: 'Training',
     tagColor: 'green',
-    image: '/images/smilingclient.webp',
+    image: '/images/services/Psychoeducation.jpg',
     body: 'We offer workshops, seminars, and educational programs designed to build mental health literacy and practical psychological skills for individuals and groups.',
     bullets: [
       'Mental health workshops',
@@ -123,7 +130,7 @@ export default function ServicesAccordion() {
         {services.map((service, index) => {
           const isOpen = openIndex === index
           return (
-            <div key={service.num}>
+            <div key={service.num} id={service.slug} className="scroll-mt-28">
               <button
                 type="button"
                 onClick={() => toggle(index)}

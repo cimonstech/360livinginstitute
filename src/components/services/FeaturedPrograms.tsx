@@ -10,58 +10,64 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { createClient } from '@/lib/supabase/server'
+import type { Event } from '@/types'
 
-const programs: {
+type ProgramCard = {
+  id: string
   title: string
   desc: string
-  Icon: LucideIcon
+  Icon?: LucideIcon
   tone: 'pink' | 'green'
-}[] = [
-  {
-    title: 'Thrive360 Experience',
-    desc: 'A holistic mental well-being experience for whole-person transformation.',
-    Icon: Sparkles,
-    tone: 'pink',
-  },
-  {
-    title: 'Complete Living Series Webinar',
-    desc: 'Online sessions exploring life development themes and practical tools.',
-    Icon: Monitor,
-    tone: 'green',
-  },
-  {
-    title: 'Personal Development Cohorts',
-    desc: 'Growth through shared learning and meaningful connection.',
-    Icon: Users,
-    tone: 'pink',
-  },
-  {
-    title: 'Leadership Circles',
-    desc: 'Peer learning and reflection spaces for leaders and executives.',
-    Icon: Circle,
-    tone: 'green',
-  },
-  {
-    title: 'Parenthood Transitions Masterclass',
-    desc: 'Navigating the psychological shifts and demands of parenthood.',
-    Icon: Baby,
-    tone: 'pink',
-  },
-  {
-    title: 'Adolescence Transitions Program',
-    desc: 'Supporting young people through identity, growth, and change.',
-    Icon: GraduationCap,
-    tone: 'green',
-  },
-  {
-    title: 'The 360Living Woman Code',
-    desc: 'A dedicated program celebrating and empowering the journey of women.',
-    Icon: Heart,
-    tone: 'pink',
-  },
-]
+}
 
-export default function FeaturedPrograms() {
+function iconForCategory(category?: string | null): LucideIcon | undefined {
+  switch ((category || '').toLowerCase()) {
+    case 'workshop':
+      return Sparkles
+    case 'webinar':
+      return Monitor
+    case 'cohort':
+      return Users
+    case 'leadership':
+      return Circle
+    case 'parenting':
+      return Baby
+    case 'youth':
+      return GraduationCap
+    case 'women':
+      return Heart
+    default:
+      return undefined
+  }
+}
+
+function toneForCategory(category?: string | null): 'pink' | 'green' {
+  const c = (category || '').toLowerCase()
+  return c === 'webinar' || c === 'leadership' || c === 'youth' ? 'green' : 'pink'
+}
+
+export default async function FeaturedPrograms() {
+  const supabase = await createClient()
+  const { data: raw } = await supabase
+    .from('events')
+    .select('*')
+    .in('status', ['upcoming', 'ongoing'])
+    .order('event_date', { ascending: true })
+    .limit(6)
+
+  const events = (raw as Event[]) ?? []
+
+  const programs: ProgramCard[] = events.map((ev) => ({
+    id: ev.id,
+    title: ev.title,
+    desc: ev.description?.trim() || 'Join us for a guided experience designed to support growth and well-being.',
+    Icon: iconForCategory(ev.category),
+    tone: toneForCategory(ev.category),
+  }))
+
+  if (programs.length === 0) return null
+
   return (
     <section className="bg-charcoal py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -87,29 +93,31 @@ export default function FeaturedPrograms() {
 
         <div className="mt-2 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-3">
           {programs.map((program) => {
-            const { Icon, tone, title, desc } = program
+            const { Icon, tone, title, desc, id } = program
             return (
               <div
-                key={title}
+                key={id}
                 className="bg-charcoal p-7 transition-colors hover:bg-[#2C2C2C]"
               >
-                <div
-                  className={cn(
-                    'mb-5 flex h-10 w-10 items-center justify-center rounded-full',
-                    tone === 'pink' ? 'bg-brand-pink/20' : 'bg-brand-green/20'
-                  )}
-                >
-                  <Icon
-                    className={tone === 'pink' ? 'text-brand-pink-light' : 'text-brand-green-light'}
-                    size={18}
-                    strokeWidth={1.75}
-                    aria-hidden
-                  />
-                </div>
+                {Icon ? (
+                  <div
+                    className={cn(
+                      'mb-5 flex h-10 w-10 items-center justify-center rounded-full',
+                      tone === 'pink' ? 'bg-brand-pink/20' : 'bg-brand-green/20'
+                    )}
+                  >
+                    <Icon
+                      className={tone === 'pink' ? 'text-brand-pink-light' : 'text-brand-green-light'}
+                      size={18}
+                      strokeWidth={1.75}
+                      aria-hidden
+                    />
+                  </div>
+                ) : null}
                 <h3 className="mb-2 font-lora text-base font-normal text-white">{title}</h3>
                 <p className="font-dm text-xs font-light leading-relaxed text-white/50">{desc}</p>
                 <Link
-                  href="/events"
+                  href="/events#events-list"
                   className="mt-4 block font-dm text-xs text-brand-pink transition-colors hover:underline"
                 >
                   Learn more →

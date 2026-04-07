@@ -25,7 +25,7 @@ export default function Hero() {
           <h1 className="font-lora text-4xl font-normal leading-tight text-white lg:text-6xl">
             Understanding Life
             <br />
-            Transitions — The
+            Transitions; The
             <br />
             <em className="font-lora text-brand-pink not-italic">Hidden Key</em> to
             <br />
@@ -47,7 +47,7 @@ export default function Hero() {
               href="/services"
               className="rounded-full border border-white/50 px-6 py-3 font-dm text-sm font-light text-white transition-colors hover:bg-white/10"
             >
-              Explore Programs
+              Explore Services
             </Link>
           </div>
         </div>
@@ -79,13 +79,13 @@ export default function Hero() {
           <div className="max-w-xs rounded-2xl bg-white px-5 py-4 shadow-sm lg:ml-auto">
             <div className="flex flex-wrap gap-2">
               <span className="rounded-full bg-brand-pink-pale px-3 py-1 font-dm text-xs font-medium text-brand-pink">
-                Therapy
+              Individual Counselling
               </span>
               <span className="rounded-full bg-brand-pink-pale px-3 py-1 font-dm text-xs font-medium text-brand-pink">
-                Counselling
+                Corporate Wellness
               </span>
               <span className="rounded-full bg-brand-pink-pale px-3 py-1 font-dm text-xs font-medium text-brand-pink">
-                Life Transitions
+                Family Therapy
               </span>
             </div>
             <p className="mt-2 font-dm text-xs text-charcoal-muted">Expert-led support for all stages of life</p>
