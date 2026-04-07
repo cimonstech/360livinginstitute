@@ -15,7 +15,7 @@ const boardMembers = [
     id: 'selasi-doku',
     name: 'Selasi Doku (Mrs.)',
     role: 'Executive Director / CEO',
-    image: '/images/SelasiDoku_.jpeg',
+    image: '/images/selasi.jpeg',
     tags: ['MIoD-GH', 'Counselling Psychologist', 'Life Strategist', 'Speaker'],
     bioFirst:
       'Selasi Doku is a counselling psychologist, life strategist, and systems builder dedicated to helping people gain insight into their lives so they can transition intentionally and thrive.',

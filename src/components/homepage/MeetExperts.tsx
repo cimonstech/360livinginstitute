@@ -25,7 +25,7 @@ const team: TeamMember[] = [
   {
     name: 'Selasi Doku',
     role: 'Executive Director & CEO',
-    imageSrc: '/images/SelasiDoku_.jpeg',
+    imageSrc: '/images/selasi.jpeg',
     pills: ['Counselling', 'Life Transitions'],
   },
   {

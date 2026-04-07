@@ -16,7 +16,7 @@ const members = [
     role: 'Executive Director / CEO',
     org: 'MIoD-GH | Counselling Psychologist',
     bio: 'Dedicated to helping people gain insight into their lives so they can transition intentionally and thrive.',
-    image: '/images/SelasiDoku_.jpeg',
+    image: '/images/selasi.jpeg',
   },
   {
     slug: 'seyram-mankra',

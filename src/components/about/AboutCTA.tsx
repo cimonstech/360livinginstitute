@@ -57,7 +57,7 @@ export default function AboutCTA() {
             </p>
             <div className="mt-4 flex items-center gap-3">
               <Image
-                src="/images/SelasiDoku_.jpeg"
+                src="/images/Selasi-Doku.jpeg"
                 alt=""
                 width={36}
                 height={36}

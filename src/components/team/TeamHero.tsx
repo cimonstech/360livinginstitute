@@ -33,7 +33,7 @@ export default function TeamHero() {
 
         <div className="relative mx-auto h-80 w-full max-w-md lg:max-w-none">
           <Image
-            src="/images/SelasiDoku_.jpeg"
+            src="/images/selasi.jpeg"
             alt="Selasi Doku"
             width={192}
             height={256}
