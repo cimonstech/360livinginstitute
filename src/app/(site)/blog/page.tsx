@@ -7,20 +7,20 @@ import Footer from '@/components/layout/Footer'
 import type { BlogPost } from '@/types'
 
 export const metadata: Metadata = {
-  title: 'Blog & Resources | 360 Living Institute',
+  title: 'Live Life Well | 360 Living Institute',
   description:
     'Mental health insights, life transition guidance, and psychological well-being resources from the team at 360 Living Institute.',
   alternates: canonicalPath('/blog'),
   openGraph: {
     ...rootOpenGraphDefaults,
-    title: 'Blog & Resources | 360 Living Institute',
+    title: 'Live Life Well | 360 Living Institute',
     description:
       'Mental health insights, life transition guidance, and psychological well-being resources from the team at 360 Living Institute.',
     url: '/blog',
   },
   twitter: {
     ...rootTwitterDefaults,
-    title: 'Blog & Resources | 360 Living Institute',
+    title: 'Live Life Well | 360 Living Institute',
     description:
       'Mental health insights, life transition guidance, and psychological well-being resources from the team at 360 Living Institute.',
   },

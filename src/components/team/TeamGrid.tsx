@@ -1,39 +1,48 @@
-import Image from 'next/image'
+'use client'
 
-const boardMembers = [
-  {
-    id: 'angela-appiah',
-    name: 'Rev. (Mrs.) Angela Carmen Appiah',
-    role: 'Board Chairperson',
-    image: '/images/Rev.Angela.jpeg',
-    tags: ['CEO, African Corporate Governance Network', 'Fellow, IoD-Gh'],
-    bioFirst:
-      'Rev. (Mrs.) Angela Carmen Appiah is a transformative leader and a pioneering force in African governance, serving as the first female Chief Executive Officer of the African Corporate Governance Network (ACGN).',
-    photoSoon: false,
-  },
-  {
-    id: 'selasi-doku',
-    name: 'Selasi Doku (Mrs.)',
-    role: 'Executive Director / CEO',
-    image: '/images/selasi.jpeg',
-    tags: ['MIoD-GH', 'Counselling Psychologist', 'Life Strategist', 'Speaker'],
-    bioFirst:
-      'Selasi Doku is a counselling psychologist, life strategist, and systems builder dedicated to helping people gain insight into their lives so they can transition intentionally and thrive.',
-    photoSoon: false,
-  },
-  {
-    id: 'seyram-mankra',
-    name: 'Seyram Kodzo Mankra',
-    role: 'Board Member',
-    image: '/images/members/person7.webp',
-    tags: ['Corporate Governance Specialist', 'Board Advisory', 'Leadership Development'],
-    bioFirst:
-      'Seyram Kodzo Mankra is a corporate governance professional and board advisory specialist with over two decades of experience supporting boards and executive leadership teams.',
-    photoSoon: false,
-  },
-]
+import Image from 'next/image'
+import { useCallback, useEffect, useState } from 'react'
+import { X } from 'lucide-react'
+import { boardMembers, type BoardMember } from '@/data/board-members'
+
+function memberFromHash(hash: string): BoardMember | null {
+  if (!hash || hash === '#') return null
+  const id = hash.startsWith('#') ? hash.slice(1) : hash
+  return boardMembers.find((m) => m.id === id) ?? null
+}
 
 export default function TeamGrid() {
+  const [modalMember, setModalMember] = useState<BoardMember | null>(null)
+
+  const syncHash = useCallback(() => {
+    setModalMember(memberFromHash(window.location.hash))
+  }, [])
+
+  useEffect(() => {
+    syncHash()
+    window.addEventListener('hashchange', syncHash)
+    return () => window.removeEventListener('hashchange', syncHash)
+  }, [syncHash])
+
+  const closeModal = useCallback(() => {
+    setModalMember(null)
+    const path = window.location.pathname + window.location.search
+    window.history.replaceState(null, '', path)
+  }, [])
+
+  useEffect(() => {
+    if (!modalMember) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [modalMember, closeModal])
+
+  const openProfile = (id: string) => {
+    window.location.hash = id
+  }
+
   return (
     <section className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -48,7 +57,7 @@ export default function TeamGrid() {
             <article
               id={member.id}
               key={member.id}
-              className="overflow-hidden rounded-2xl border border-gray-100 bg-white transition-shadow hover:shadow-md"
+              className="scroll-mt-28 overflow-hidden rounded-2xl border border-gray-100 bg-white transition-shadow hover:shadow-md"
             >
               <div className="relative h-72 w-full overflow-hidden">
                 {member.id === 'seyram-mankra' ? (
@@ -62,7 +71,10 @@ export default function TeamGrid() {
                     sizes="(max-width:768px) 100vw, 33vw"
                   />
                 )}
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" aria-hidden />
+                <div
+                  className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent"
+                  aria-hidden
+                />
                 <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 font-dm text-xs font-medium text-charcoal">
                   {member.role}
                 </span>
@@ -71,7 +83,10 @@ export default function TeamGrid() {
                 <h3 className="font-lora text-xl font-normal text-charcoal">{member.name}</h3>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {member.tags.map((t) => (
-                    <span key={t} className="rounded-full bg-charcoal-light px-2 py-0.5 font-dm text-xs text-charcoal-muted">
+                    <span
+                      key={t}
+                      className="rounded-full bg-charcoal-light px-2 py-0.5 font-dm text-xs text-charcoal-muted"
+                    >
                       {t}
                     </span>
                   ))}
@@ -82,11 +97,72 @@ export default function TeamGrid() {
                     Photo coming soon
                   </span>
                 ) : null}
+                <button
+                  type="button"
+                  onClick={() => openProfile(member.id)}
+                  className="mt-4 font-dm text-xs font-medium text-brand-pink transition-colors hover:underline"
+                >
+                  View profile →
+                </button>
               </div>
             </article>
           ))}
         </div>
       </div>
+
+      {modalMember ? (
+        <div
+          className="fixed inset-0 z-[600] flex items-end justify-center sm:items-center sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="board-profile-title"
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-charcoal/50 backdrop-blur-[2px]"
+            aria-label="Close profile"
+            onClick={closeModal}
+          />
+          <div className="relative z-10 flex max-h-[min(90vh,820px)] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-gray-100 bg-white shadow-xl sm:rounded-2xl">
+            <button
+              type="button"
+              onClick={closeModal}
+              className="absolute right-3 top-3 z-20 rounded-full border border-gray-100 bg-white p-2 text-charcoal shadow-sm transition-colors hover:bg-gray-50"
+              aria-label="Close"
+            >
+              <X size={18} />
+            </button>
+            <div className="min-h-0 flex-1 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-16">
+              <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">{modalMember.role}</p>
+              <h3 id="board-profile-title" className="mt-2 font-lora text-2xl font-normal text-charcoal sm:text-[1.65rem]">
+                {modalMember.name}
+              </h3>
+              {modalMember.headline ? (
+                <p className="mt-2 font-dm text-sm font-normal text-charcoal/90">{modalMember.headline}</p>
+              ) : null}
+              <div className="mt-5 space-y-4">
+                {modalMember.modalParagraphs.map((p, i) => (
+                  <p key={i} className="font-dm text-sm font-light leading-relaxed text-charcoal-muted">
+                    {p}
+                  </p>
+                ))}
+              </div>
+              {modalMember.modalFocusTitle && modalMember.modalFocusItems?.length ? (
+                <div className="mt-6 border-t border-gray-100 pt-6">
+                  <p className="font-dm text-xs font-semibold uppercase tracking-wider text-charcoal">
+                    {modalMember.modalFocusTitle}
+                  </p>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 font-dm text-sm font-light leading-relaxed text-charcoal-muted">
+                    {modalMember.modalFocusItems.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   )
 }

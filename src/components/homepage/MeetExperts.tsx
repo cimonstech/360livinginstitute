@@ -17,7 +17,7 @@ type TeamMember =
 
 const team: TeamMember[] = [
   {
-    name: 'Rev. Angela Appiah',
+    name: 'Rev. (Mrs.) Angela Carmen Appiah',
     role: 'Board Chairperson',
     imageSrc: '/images/Rev.Angela2.jpeg',
     pills: ['Governance', 'Leadership'],

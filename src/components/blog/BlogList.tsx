@@ -92,7 +92,7 @@ export default function BlogList({
   return (
     <div className="bg-white">
       <section className="mx-auto max-w-7xl bg-warm-cream px-6 py-24 lg:px-10">
-        <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">Blog & Resources</p>
+        <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">Live Life Well</p>
         <h1 className="mt-2 max-w-3xl font-lora text-4xl font-normal leading-tight text-charcoal lg:text-5xl">
           Insights for a <em className="italic">Whole</em> Life
         </h1>
