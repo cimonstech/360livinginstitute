@@ -31,7 +31,7 @@ const team: TeamMember[] = [
   {
     name: 'Seyram Mankra',
     role: 'Board Advisory Specialist',
-    avatar: 6,
+    imageSrc: '/images/Seyram-1.jpeg',
     pills: ['Corporate', 'Strategy'],
   },
 ]
@@ -55,17 +55,13 @@ export default function MeetExperts() {
               className="overflow-hidden rounded-2xl border border-gray-100 bg-white transition-all hover:border-brand-pink hover:shadow-sm"
             >
               <div className="relative aspect-square w-full">
-                {member.name === 'Seyram Mankra' ? (
-                  <div className="h-full w-full bg-charcoal-light" aria-hidden />
-                ) : (
-                  <Image
-                    src={'imageSrc' in member ? member.imageSrc : `/images/members/person${member.avatar}.webp`}
-                    alt=""
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                )}
+                <Image
+                  src={'imageSrc' in member ? member.imageSrc : `/images/members/person${member.avatar}.webp`}
+                  alt=""
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
               </div>
               <div className="p-6 text-center">
                 <p className="font-dm text-base font-medium text-charcoal">{member.name}</p>

@@ -16,9 +16,24 @@ export default function AboutHero() {
             Insight &amp; <em className="font-lora italic text-brand-pink">Life Development</em>
           </h1>
           <p className="mt-6 max-w-lg font-dm text-base font-light leading-relaxed text-charcoal-muted">
-            The 360 Living Institute is dedicated to helping individuals, families, and organizations achieve wholeness
-            through structured, evidence-based transformation. Our focus is on guiding people through life transitions
-            while emphasizing prevention over crisis management.
+            <strong className="font-semibold text-charcoal">360 Living Institute</strong> is a center for professional
+            counselling, mental well-being, and personal development institute committed to transforming lives, by
+            offering personalized psychological insight services to individuals, Teams of organisations, communities and
+            families through evidence-based psychological practice, life strategies, and human-centered interventions.
+            <br />
+            <br />
+            Rooted in counselling psychology and preventive mental health, the Institute provides holistic, culturally
+            responsive, and ethically grounded services that address emotional well-being, life transitions, leadership
+            effectiveness, and sustainable personal growth.
+            <br />
+            <br />
+            At 360 Living Institute, we believe that{' '}
+            <strong className="font-semibold text-charcoal">
+              mental well-being is foundational to productivity, healthy relationships, leadership, and national
+              development
+            </strong>
+            . Our work integrates psychological science, practical life skills, and value-based approaches to help
+            individuals and institutions thrive across all stages of life.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

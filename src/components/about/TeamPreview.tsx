@@ -24,7 +24,7 @@ const members = [
     role: 'Board Member',
     org: 'Corporate Governance & Board Advisory Specialist',
     bio: 'Over two decades supporting boards and executive leadership teams to strengthen governance effectiveness.',
-    image: '/images/members/person7.webp',
+    image: '/images/Seyram-1.jpeg',
   },
 ]
 
@@ -47,17 +47,13 @@ export default function TeamPreview() {
               className="overflow-hidden rounded-2xl border border-gray-100 bg-white transition-shadow hover:shadow-md"
             >
               <div className="relative h-64 w-full overflow-hidden">
-                {member.slug === 'seyram-mankra' ? (
-                  <div className="h-full w-full bg-charcoal-light" aria-hidden />
-                ) : (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width:768px) 100vw, 33vw"
-                  />
-                )}
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width:768px) 100vw, 33vw"
+                />
               </div>
               <div className="p-6">
                 <h3 className="font-lora text-lg font-medium text-charcoal">{member.name}</h3>

@@ -13,9 +13,17 @@ export default function AboutSection() {
             <em className="font-lora italic text-brand-pink">understanding.</em>
           </h2>
           <p className="mx-auto mt-4 max-w-md font-dm text-sm font-light leading-relaxed text-charcoal-muted lg:mx-0">
-            360 Living Institute is a center for psychological insight, counselling, and life development. We exist to
-            help people understand where they are in life, why they feel stuck, and how to move forward with clarity and
-            purpose.
+            <strong className="font-semibold text-charcoal">360 Living Institute</strong> is a center for professional counselling, mental well-being, and personal development institute committed to transforming lives, by offering personalized psychological insight services to individuals, Teams of organisations, communities and families through evidence-based psychological practice, life strategies, and human-centered interventions.
+            <br />
+            <br />
+            Rooted in counselling psychology and preventive mental health, the Institute provides holistic, culturally responsive, and ethically grounded services that address emotional well-being, life transitions, leadership effectiveness, and sustainable personal growth.
+            <br />
+            <br />
+            At 360 Living Institute, we believe that{' '}
+            <strong className="font-semibold text-charcoal">
+              mental well-being is foundational to productivity, healthy relationships, leadership, and national development
+            </strong>
+            . Our work integrates psychological science, practical life skills, and value-based approaches to help individuals and institutions thrive across all stages of life.
           </p>
 
           <div className="mx-auto mt-6 flex max-w-md flex-col gap-2 lg:mx-0">

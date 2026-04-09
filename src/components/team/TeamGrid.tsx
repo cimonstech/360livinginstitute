@@ -60,17 +60,13 @@ export default function TeamGrid() {
               className="scroll-mt-28 overflow-hidden rounded-2xl border border-gray-100 bg-white transition-shadow hover:shadow-md"
             >
               <div className="relative h-72 w-full overflow-hidden">
-                {member.id === 'seyram-mankra' ? (
-                  <div className="h-full w-full bg-charcoal-light" aria-hidden />
-                ) : (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width:768px) 100vw, 33vw"
-                  />
-                )}
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width:768px) 100vw, 33vw"
+                />
                 <div
                   className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent"
                   aria-hidden
@@ -133,7 +129,9 @@ export default function TeamGrid() {
               <X size={18} />
             </button>
             <div className="min-h-0 flex-1 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-16">
-              <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">{modalMember.role}</p>
+              {modalMember.id !== 'seyram-mankra' && modalMember.role ? (
+                <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">{modalMember.role}</p>
+              ) : null}
               <h3 id="board-profile-title" className="mt-2 font-lora text-2xl font-normal text-charcoal sm:text-[1.65rem]">
                 {modalMember.name}
               </h3>

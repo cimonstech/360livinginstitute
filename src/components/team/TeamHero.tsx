@@ -5,7 +5,7 @@ export default function TeamHero() {
     <section className="bg-warm-cream py-24">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2 lg:px-10">
         <div>
-          <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">Our Team</p>
+          <p className="font-dm text-xs font-medium uppercase tracking-widest text-brand-pink">Our Board</p>
           <h1 className="mt-4 font-lora text-4xl font-normal leading-tight text-charcoal lg:text-5xl">
             The people dedicated
             <br />
@@ -33,21 +33,21 @@ export default function TeamHero() {
 
         <div className="relative mx-auto h-80 w-full max-w-md lg:max-w-none">
           <Image
-            src="/images/selasi.jpeg"
-            alt="Selasi Doku"
+            src="/images/Rev.Angela.jpeg"
+            alt="Rev. Angela Carmen Appiah"
             width={192}
             height={256}
             className="absolute left-0 top-0 h-64 w-48 rounded-2xl border-4 border-white object-cover object-top shadow-sm"
           />
           <Image
-            src="/images/Rev.Angela.jpeg"
-            alt="Rev. Angela Carmen Appiah"
+            src="/images/selasi.jpeg"
+            alt="Selasi Doku"
             width={192}
             height={256}
             className="absolute bottom-0 right-0 h-64 w-48 rounded-2xl border-4 border-white object-cover object-top shadow-sm"
           />
           <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-gray-100 bg-white px-4 py-2 shadow-sm">
-            <span className="font-dm text-xs font-medium text-charcoal">Meet Our Team ✦</span>
+            <span className="font-dm text-xs font-medium text-charcoal">Meet Our Board ✦</span>
           </div>
         </div>
       </div>
