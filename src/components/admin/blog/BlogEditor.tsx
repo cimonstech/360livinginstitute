@@ -283,7 +283,7 @@ export default function BlogEditor({ post }: Props) {
       formData.append('alt_text', title || file.name)
       formData.append('used_in', 'blog')
       const res = await fetch('/api/media/upload', { method: 'POST', body: formData })
-      const data = (await res.json()) as { error?: string; media?: { file_url: string } }
+      const data = (await res.json()) as { error?: string; media?: { file_url: string; file_name: string; file_size?: number | null } }
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       if (!data.media?.file_url) throw new Error('No file URL returned')
       setAttachmentUrl(data.media.file_url)

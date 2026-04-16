@@ -32,6 +32,7 @@ export default async function BlogPage() {
     .from('blog_posts')
     .select('*')
     .eq('status', 'published')
+    .in('publish_to', ['institute', 'both'])
     .order('published_at', { ascending: false })
 
   const list = (posts as BlogPost[]) ?? []

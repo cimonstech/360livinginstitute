@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .select('title, excerpt, cover_image_url, cover_image_alt')
     .eq('slug', slug)
     .eq('status', 'published')
+    .in('publish_to', ['institute', 'both'])
     .maybeSingle()
 
   const path = `/blog/${slug}`
@@ -65,6 +66,7 @@ export default async function BlogPostPage({ params }: Props) {
     .select('*')
     .eq('slug', slug)
     .eq('status', 'published')
+    .in('publish_to', ['institute', 'both'])
     .single()
 
   if (!post) notFound()
@@ -73,6 +75,7 @@ export default async function BlogPostPage({ params }: Props) {
     .from('blog_posts')
     .select('id, title, slug, excerpt, cover_image_url, published_at, read_time_minutes, author_name')
     .eq('status', 'published')
+    .in('publish_to', ['institute', 'both'])
     .neq('id', post.id)
     .order('published_at', { ascending: false })
     .limit(3)

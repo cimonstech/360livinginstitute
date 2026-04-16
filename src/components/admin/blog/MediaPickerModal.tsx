@@ -52,7 +52,10 @@ export default function MediaPickerModal({
       })
       .filter((m) => {
         if (!q) return true
-        return m.file_name.toLowerCase().includes(q) || (m.alt_text || '').toLowerCase().includes(q)
+        return (
+          m.file_name.toLowerCase().includes(q) ||
+          (m.alt_text || '').toLowerCase().includes(q)
+        )
       })
   }, [media, query, type])
 
@@ -84,6 +87,13 @@ export default function MediaPickerModal({
             placeholder="Search..."
             className="w-full rounded-full border border-gray-200 bg-white px-4 py-2 font-dm text-xs text-charcoal focus:border-brand-pink focus:outline-none"
           />
+          <button
+            type="button"
+            onClick={() => onClose()}
+            className="rounded-full border border-gray-200 bg-white px-4 py-2 font-dm text-xs text-charcoal-muted hover:bg-charcoal-light"
+          >
+            Close
+          </button>
         </div>
 
         <div className="max-h-[70vh] overflow-y-auto p-5">
@@ -96,8 +106,7 @@ export default function MediaPickerModal({
           ) : (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
               {filtered.map((m) => {
-                const isPdf =
-                  (m.mime_type || '').toLowerCase() === 'application/pdf' || m.file_url.toLowerCase().endsWith('.pdf')
+                const isPdf = (m.mime_type || '').toLowerCase() === 'application/pdf' || m.file_url.toLowerCase().endsWith('.pdf')
                 return (
                   <button
                     key={m.id}

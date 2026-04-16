@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { BlogPost } from '@/types'
 import { formatBlogDate } from '@/lib/format-display'
+import { Download, ExternalLink, FileText, Image as ImageIcon } from 'lucide-react'
 
 type Related = Pick<
   BlogPost,
@@ -109,6 +110,51 @@ export default function BlogPostView({
           className="prose prose-lg max-w-none font-dm leading-relaxed text-charcoal prose-headings:font-lora prose-headings:font-normal prose-headings:text-charcoal prose-p:font-light prose-p:text-charcoal-muted prose-a:text-brand-pink prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-brand-pink prose-blockquote:text-brand-pink prose-blockquote:italic prose-strong:font-medium prose-strong:text-charcoal prose-img:w-full prose-img:rounded-xl"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
+
+        {post.attachment_url && (
+          <div className="mt-12 flex flex-col gap-4 rounded-2xl border border-brand-green-light bg-brand-green-pale p-6 sm:flex-row sm:items-center">
+            {post.attachment_url.endsWith('.pdf') || (post.attachment_name || '').toLowerCase().endsWith('.pdf') ? (
+              <>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-green text-white">
+                  <FileText size={22} aria-hidden />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-dm text-sm font-medium text-charcoal">Download Resource</p>
+                  <p className="mt-0.5 truncate font-dm text-xs text-charcoal-muted">
+                    {post.attachment_name || 'PDF Guide'}
+                  </p>
+                </div>
+                <a
+                  href={post.attachment_url}
+                  download={post.attachment_name || undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-green px-5 py-2.5 font-dm text-sm font-medium text-white"
+                >
+                  <Download size={14} aria-hidden /> Download PDF
+                </a>
+              </>
+            ) : (
+              <>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-pink text-white">
+                  <ImageIcon size={22} aria-hidden />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-dm text-sm font-medium text-charcoal">View Infographic</p>
+                  <p className="mt-0.5 font-dm text-xs text-charcoal-muted">Click to view full size</p>
+                </div>
+                <a
+                  href={post.attachment_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-pink px-5 py-2.5 font-dm text-sm font-medium text-white"
+                >
+                  <ExternalLink size={14} aria-hidden /> View Full Size
+                </a>
+              </>
+            )}
+          </div>
+        )}
       </article>
 
       {relatedPosts.length > 0 && (
