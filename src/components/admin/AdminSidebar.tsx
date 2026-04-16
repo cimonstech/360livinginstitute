@@ -14,6 +14,11 @@ import {
   BarChart2,
   Globe,
   FileText,
+  Inbox,
+  ClipboardList,
+  Handshake,
+  Heart,
+  Gift,
   Image as ImageIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -38,6 +43,19 @@ const secondary = [
   { href: '/admin/emails', label: 'Email Logs', icon: BarChart2 },
 ] as const
 
+const foundation: {
+  href: string
+  label: string
+  icon: typeof LayoutDashboard
+  exact?: boolean
+}[] = [
+  { href: '/admin/foundation', label: 'Foundation Overview', icon: Inbox, exact: true },
+  { href: '/admin/foundation/applications', label: 'Applications', icon: ClipboardList },
+  { href: '/admin/foundation/partners', label: 'Partners', icon: Handshake },
+  { href: '/admin/foundation/volunteers', label: 'Volunteers', icon: Heart },
+  { href: '/admin/foundation/sponsors', label: 'Sponsors', icon: Gift },
+]
+
 export default function AdminSidebar() {
   const pathname = usePathname()
   const [email, setEmail] = useState('')
@@ -58,7 +76,7 @@ export default function AdminSidebar() {
       <div className="p-6 border-b border-white/10">
         <Link href="/admin" className="block">
           <Image
-            src="/images/logo2.png"
+            src="/images/Logo-1.png"
             alt="360 Living Institute"
             width={100}
             height={34}
@@ -94,6 +112,23 @@ export default function AdminSidebar() {
             className={cn(
               'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-colors font-dm',
               active(href)
+                ? 'bg-brand-pink text-white'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
+            )}
+          >
+            <Icon size={18} aria-hidden />
+            {label}
+          </Link>
+        ))}
+
+        <div className="px-4 py-2 font-dm text-xs uppercase tracking-widest text-white/20">Foundation</div>
+        {foundation.map(({ href, label, icon: Icon, exact }) => (
+          <Link
+            key={href}
+            href={href}
+            className={cn(
+              'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-colors font-dm',
+              active(href, exact)
                 ? 'bg-brand-pink text-white'
                 : 'text-white/60 hover:bg-white/5 hover:text-white'
             )}

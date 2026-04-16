@@ -17,7 +17,7 @@ export default function LoginForm() {
   const [resendMsg, setResendMsg] = useState('')
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirect = searchParams.get('redirect') || '/dashboard'
+  const redirect = searchParams.get('redirect') || '/admin'
 
   async function handleResend() {
     if (!email) return
@@ -57,7 +57,7 @@ export default function LoginForm() {
     }
     await supabase.auth.getSession()
 
-    const safe = redirect.startsWith('/') && !redirect.startsWith('//') ? redirect : '/dashboard'
+    const safe = redirect.startsWith('/') && !redirect.startsWith('//') ? redirect : '/admin'
     const params = new URLSearchParams({ redirect: safe })
     let target = safe
     for (let attempt = 0; attempt < 5; attempt++) {

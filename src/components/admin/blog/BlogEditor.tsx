@@ -38,9 +38,12 @@ import {
   Loader2,
   X,
   Upload,
+  FileText,
 } from 'lucide-react'
 import type { BlogPost } from '@/types'
 import type { Media } from '@/types'
+import type { PublishTo } from '@/types'
+import MediaPickerModal from '@/components/admin/blog/MediaPickerModal'
 
 interface Props {
   post?: BlogPost | null
@@ -51,6 +54,8 @@ export default function BlogEditor({ post }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const coverInputRef = useRef<HTMLInputElement>(null)
   const libraryUploadRef = useRef<HTMLInputElement>(null)
+  const pdfInputRef = useRef<HTMLInputElement>(null)
+  const infographicInputRef = useRef<HTMLInputElement>(null)
 
   const [title, setTitle] = useState(post?.title || '')
   const [slug, setSlug] = useState(post?.slug || '')
@@ -63,6 +68,24 @@ export default function BlogEditor({ post }: Props) {
   const [featured, setFeatured] = useState(post?.featured || false)
   const [coverImageUrl, setCoverImageUrl] = useState(post?.cover_image_url || '')
   const [coverImageAlt, setCoverImageAlt] = useState(post?.cover_image_alt || '')
+  const [publishTo, setPublishTo] = useState<PublishTo>(post?.publish_to || 'institute')
+  const [category, setCategory] = useState(post?.category || '')
+
+  const initialAttachmentType: 'none' | 'pdf' | 'infographic' =
+    post?.attachment_url
+      ? post.attachment_url.toLowerCase().endsWith('.pdf') || (post.attachment_name || '').toLowerCase().endsWith('.pdf')
+        ? 'pdf'
+        : 'infographic'
+      : 'none'
+  const [attachmentType, setAttachmentType] = useState<'none' | 'pdf' | 'infographic'>(initialAttachmentType)
+  const [attachmentUrl, setAttachmentUrl] = useState(post?.attachment_url || '')
+  const [attachmentName, setAttachmentName] = useState(post?.attachment_name || '')
+  const [attachmentSize, setAttachmentSize] = useState<number | null>(
+    typeof post?.attachment_size === 'number' ? post.attachment_size : null
+  )
+  const [uploadingAttachment, setUploadingAttachment] = useState(false)
+  const [showAttachmentPicker, setShowAttachmentPicker] = useState(false)
+  const [attachmentPickerType, setAttachmentPickerType] = useState<'image' | 'pdf'>('pdf')
 
   const [saving, setSaving] = useState(false)
   const [pendingSave, setPendingSave] = useState<'draft' | 'published' | null>(null)
@@ -252,6 +275,28 @@ export default function BlogEditor({ post }: Props) {
     }
   }
 
+  async function uploadAttachment(file: File) {
+    setUploadingAttachment(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('alt_text', title || file.name)
+      formData.append('used_in', 'blog')
+      const res = await fetch('/api/media/upload', { method: 'POST', body: formData })
+      const data = (await res.json()) as { error?: string; media?: { file_url: string } }
+      if (!res.ok) throw new Error(data.error || 'Upload failed')
+      if (!data.media?.file_url) throw new Error('No file URL returned')
+      setAttachmentUrl(data.media.file_url)
+      setAttachmentName(file.name)
+      setAttachmentSize(file.size)
+    } catch (err) {
+      alert('Upload failed. Please try again.')
+      console.error(err)
+    } finally {
+      setUploadingAttachment(false)
+    }
+  }
+
   function handleEditorDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault()
     const file = e.dataTransfer.files[0]
@@ -285,6 +330,12 @@ export default function BlogEditor({ post }: Props) {
         cover_image_url: coverImageUrl,
         cover_image_alt: coverImageAlt,
         author_name: authorName,
+        publish_to: publishTo,
+        resource_type: attachmentType === 'none' ? 'article' : attachmentType,
+        category,
+        attachment_url: attachmentType !== 'none' ? attachmentUrl : null,
+        attachment_name: attachmentType !== 'none' ? attachmentName : null,
+        attachment_size: attachmentType !== 'none' ? attachmentSize : null,
         tags,
         read_time_minutes: readTime,
         featured,
@@ -771,6 +822,47 @@ export default function BlogEditor({ post }: Props) {
               </span>
             </div>
 
+            {/* Publish To */}
+            <div className="mb-4">
+              <label className="text-xs text-charcoal-muted block mb-1.5">Publish to</label>
+              <div className="flex gap-2">
+                {(['institute', 'foundation', 'both'] as const).map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setPublishTo(option)}
+                    className={`flex-1 text-xs font-medium py-2 rounded-full border transition-colors capitalize ${
+                      publishTo === option
+                        ? 'bg-brand-pink text-white border-brand-pink'
+                        : 'bg-white text-charcoal-muted border-gray-200 hover:border-brand-pink'
+                    }`}
+                  >
+                    {option === 'both' ? 'Both Sites' : option === 'institute' ? 'Institute' : 'Foundation'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Category */}
+            <div className="mb-4">
+              <label className="text-xs text-charcoal-muted block mb-1.5">Category</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-pink"
+              >
+                <option value="">No category</option>
+                <option value="mental-health">Mental Health</option>
+                <option value="life-transitions">Life Transitions</option>
+                <option value="youth">Youth Development</option>
+                <option value="women">Women Empowerment</option>
+                <option value="relationships">Relationships & Family</option>
+                <option value="wellness">Wellness & Self-Care</option>
+                <option value="leadership">Leadership & Work</option>
+                <option value="community">Community</option>
+              </select>
+            </div>
+
             <label className="mb-4 flex cursor-pointer items-center justify-between">
               <span className="text-sm text-charcoal-muted">Featured post</span>
               <button
@@ -836,6 +928,153 @@ export default function BlogEditor({ post }: Props) {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Attachment */}
+          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+            <p className="text-xs font-medium text-charcoal uppercase tracking-wider mb-4">
+              Attachment <span className="text-charcoal-muted/50 normal-case font-normal">(optional)</span>
+            </p>
+
+            <div className="flex gap-2 mb-4">
+              {(['none', 'pdf', 'infographic'] as const).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => {
+                    setAttachmentType(t)
+                    if (t === 'none') {
+                      setAttachmentUrl('')
+                      setAttachmentName('')
+                      setAttachmentSize(null)
+                    }
+                  }}
+                  className={`flex-1 text-xs py-1.5 rounded-full border transition-colors capitalize ${
+                    attachmentType === t
+                      ? 'bg-brand-green text-white border-brand-green'
+                      : 'bg-white text-charcoal-muted border-gray-200'
+                  }`}
+                >
+                  {t === 'none' ? 'None' : t === 'pdf' ? 'PDF' : 'Infographic'}
+                </button>
+              ))}
+            </div>
+
+            {attachmentType === 'pdf' && (
+              <div>
+                {attachmentUrl ? (
+                  <div className="bg-brand-green-pale rounded-xl p-3 flex items-center gap-3">
+                    <FileText size={16} className="text-brand-green flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-charcoal truncate">{attachmentName || 'PDF'}</p>
+                      <p className="text-xs text-charcoal-muted">
+                        {attachmentSize ? `${(attachmentSize / 1024).toFixed(0)} KB` : ''}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAttachmentUrl('')
+                        setAttachmentName('')
+                        setAttachmentSize(null)
+                      }}
+                      aria-label="Remove attachment"
+                    >
+                      <X size={14} className="text-charcoal-muted" />
+                    </button>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => pdfInputRef.current?.click()}
+                    className="border-2 border-dashed border-gray-200 rounded-xl h-24 flex flex-col items-center justify-center cursor-pointer hover:border-brand-green hover:bg-brand-green-pale/30 transition-colors"
+                  >
+                    {uploadingAttachment ? (
+                      <Loader2 size={18} className="animate-spin text-brand-green" />
+                    ) : (
+                      <>
+                        <Upload size={18} className="text-charcoal-muted/50 mb-1" />
+                        <p className="text-xs text-charcoal-muted">Click to upload PDF</p>
+                        <p className="text-xs text-charcoal-muted/50">Max 20MB</p>
+                      </>
+                    )}
+                  </div>
+                )}
+                <input
+                  ref={pdfInputRef}
+                  type="file"
+                  accept=".pdf,application/pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0]
+                    if (f) void uploadAttachment(f)
+                    e.target.value = ''
+                  }}
+                />
+              </div>
+            )}
+
+            {attachmentType === 'infographic' && (
+              <div>
+                {attachmentUrl ? (
+                  <div className="relative">
+                    <div className="relative w-full h-32 rounded-xl overflow-hidden bg-charcoal-light">
+                      <NextImage src={attachmentUrl} alt="Infographic" fill className="object-contain" />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAttachmentUrl('')
+                        setAttachmentName('')
+                        setAttachmentSize(null)
+                      }}
+                      className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-sm border border-gray-200"
+                      aria-label="Remove infographic"
+                    >
+                      <X size={12} className="text-red-500" />
+                    </button>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => infographicInputRef.current?.click()}
+                    className="border-2 border-dashed border-gray-200 rounded-xl h-24 flex flex-col items-center justify-center cursor-pointer hover:border-brand-pink hover:bg-brand-pink-pale/30 transition-colors"
+                  >
+                    {uploadingAttachment ? (
+                      <Loader2 size={18} className="animate-spin text-brand-pink" />
+                    ) : (
+                      <>
+                        <ImageIcon size={18} className="text-charcoal-muted/50 mb-1" />
+                        <p className="text-xs text-charcoal-muted">Click to upload infographic</p>
+                        <p className="text-xs text-charcoal-muted/50">JPG, PNG, WEBP</p>
+                      </>
+                    )}
+                  </div>
+                )}
+                <input
+                  ref={infographicInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0]
+                    if (f) void uploadAttachment(f)
+                    e.target.value = ''
+                  }}
+                />
+              </div>
+            )}
+
+            {attachmentType !== 'none' && (
+              <button
+                type="button"
+                onClick={() => {
+                  setAttachmentPickerType(attachmentType === 'pdf' ? 'pdf' : 'image')
+                  setShowAttachmentPicker(true)
+                }}
+                className="w-full mt-3 border border-gray-200 text-charcoal-muted text-xs rounded-full py-2 hover:bg-charcoal-light transition-colors"
+              >
+                Or pick from Media Library
+              </button>
+            )}
           </div>
 
           <div className="rounded-2xl border border-gray-100 bg-white p-5">
@@ -1020,6 +1259,18 @@ export default function BlogEditor({ post }: Props) {
           </div>
         </>
       )}
+
+      <MediaPickerModal
+        isOpen={showAttachmentPicker}
+        onClose={() => setShowAttachmentPicker(false)}
+        type={attachmentPickerType}
+        onSelect={(url, name, size) => {
+          setAttachmentUrl(url)
+          setAttachmentName(name)
+          setAttachmentSize(size ?? null)
+          setShowAttachmentPicker(false)
+        }}
+      />
     </div>
   )
 }

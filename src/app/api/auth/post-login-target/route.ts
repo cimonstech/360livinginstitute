@@ -12,8 +12,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const rawRedirect = request.nextUrl.searchParams.get('redirect')?.trim() || '/dashboard'
-  const safeRedirect = rawRedirect.startsWith('/') && !rawRedirect.startsWith('//') ? rawRedirect : '/dashboard'
+  const rawRedirect = request.nextUrl.searchParams.get('redirect')?.trim() || '/admin'
+  const safeRedirect = rawRedirect.startsWith('/') && !rawRedirect.startsWith('//') ? rawRedirect : '/admin'
 
   let { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle()
   if (!profile || profile.role !== 'admin') {

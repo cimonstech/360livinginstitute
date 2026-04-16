@@ -6,23 +6,31 @@ import { metadataBaseUrl, rootOpenGraphDefaults, rootTwitterDefaults } from '@/l
 
 validateEnv()
 
-const defaultTitle = '360 Living Institute'
+const defaultTitle = '360 Living Foundation'
 const defaultDescription =
-  'Transforming Lives Through Psychological Insight & Life Development. Counselling, life transition support, and corporate wellness in Accra, Ghana.'
+  'Transforming minds and empowering lives through counselling, mentorship, and life development programmes. Accra, Ghana — Heal, Grow and Rise!'
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl(),
   title: defaultTitle,
   description: defaultDescription,
-  keywords: ['counselling', 'psychology', 'mental health', 'life transitions', 'Accra', 'Ghana'],
+  keywords: [
+    'mental health',
+    'counselling',
+    'mentorship',
+    'Ghana',
+    'youth development',
+    'women empowerment',
+    '360 Living Foundation',
+  ],
   manifest: '/favicon/site.webmanifest',
   icons: {
     icon: [
-      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/logo_favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/logo_favicon.png', sizes: '192x192', type: 'image/png' },
     ],
-    shortcut: '/favicon/favicon.ico',
-    apple: '/favicon/apple-touch-icon.png',
+    shortcut: '/images/logo_favicon.png',
+    apple: '/images/logo_favicon.png',
   },
   openGraph: {
     ...rootOpenGraphDefaults,

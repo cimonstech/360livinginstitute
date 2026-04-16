@@ -6,7 +6,7 @@ export default async function ConfirmedPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>
 }) {
   const sp = (await searchParams) ?? {}
-  const next = typeof sp.next === 'string' && sp.next.startsWith('/') ? sp.next : '/dashboard'
+  const next = typeof sp.next === 'string' && sp.next.startsWith('/') ? sp.next : '/admin'
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-20">
@@ -27,7 +27,7 @@ export default async function ConfirmedPage({
           href={next}
           className="inline-flex items-center justify-center rounded-full border border-gray-200 px-6 py-2.5 text-sm font-dm text-charcoal-muted hover:bg-gray-50"
         >
-          Go to dashboard
+          Go to admin
         </Link>
       </div>
 

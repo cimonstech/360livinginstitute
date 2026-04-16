@@ -107,6 +107,15 @@ export default function EventRegistrationModal({ event, isOpen, onClose }: Props
 
   useEffect(() => {
     if (!isOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
@@ -170,7 +179,7 @@ export default function EventRegistrationModal({ event, isOpen, onClose }: Props
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm sm:items-center sm:px-4"
+      className="fixed inset-0 z-[1000] flex items-end justify-center bg-black/50 backdrop-blur-sm sm:items-center sm:px-4"
       role="presentation"
       onClick={onClose}
     >
@@ -249,10 +258,10 @@ export default function EventRegistrationModal({ event, isOpen, onClose }: Props
                 </button>
                 {!userId && (
                   <Link
-                    href="/signup"
+                    href="/get-involved"
                     className="inline-flex items-center justify-center rounded-full bg-brand-pink px-5 py-2.5 font-dm text-sm font-medium text-white hover:opacity-90"
                   >
-                    Create Account
+                    Get Involved
                   </Link>
                 )}
               </div>

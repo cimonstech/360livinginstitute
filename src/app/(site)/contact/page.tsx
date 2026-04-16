@@ -7,22 +7,20 @@ import ContactInfo from '@/components/contact/ContactInfo'
 import Footer from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | 360 Living Institute',
+  title: 'Contact Us | 360 Living Foundation',
   description:
-    'Get in touch with 360 Living Institute. Book a session, partner with us, invite us to speak, or simply reach out.',
+    'Reach the 360 Living Foundation in Accra, Ghana. Email info@360livingfoundation.org or call 0264589293.',
   alternates: canonicalPath('/contact'),
   openGraph: {
     ...rootOpenGraphDefaults,
-    title: 'Contact Us | 360 Living Institute',
-    description:
-      'Get in touch with 360 Living Institute. Book a session, partner with us, invite us to speak, or simply reach out.',
+    title: 'Contact Us | 360 Living Foundation',
+    description: 'We would love to hear from you — programmes, partnerships, and more.',
     url: '/contact',
   },
   twitter: {
     ...rootTwitterDefaults,
-    title: 'Contact Us | 360 Living Institute',
-    description:
-      'Get in touch with 360 Living Institute. Book a session, partner with us, invite us to speak, or simply reach out.',
+    title: 'Contact Us | 360 Living Foundation',
+    description: 'We would love to hear from you — programmes, partnerships, and more.',
   },
 }
 

@@ -133,12 +133,6 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (pathname.startsWith('/dashboard')) {
-    if (!user) {
-      return NextResponse.redirect(new URL('/login?redirect=/dashboard', request.url))
-    }
-  }
-
   supabaseResponse.headers.set('X-Frame-Options', 'DENY')
   supabaseResponse.headers.set('X-Content-Type-Options', 'nosniff')
   supabaseResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')

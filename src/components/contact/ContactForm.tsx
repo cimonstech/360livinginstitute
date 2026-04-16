@@ -4,11 +4,20 @@ import { useState, type FormEvent } from 'react'
 import { HONEYPOT_FIELD } from '@/lib/honeypot'
 import { Send, Phone, Mail, Loader2, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { company } from '@/data/content'
 
-const intents = ['General Enquiry', 'Book a Session', 'Partner With Us', 'Invite to Speak'] as const
+const intents = [
+  'General Enquiry',
+  'Apply for a Program',
+  'Partner With Us',
+  'Volunteer',
+  'Sponsor a Program',
+  'Donate',
+] as const
 
+/** Accra, Ghana */
 const MAP_EMBED_SRC =
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.972099024127!2d-0.22991110000000003!3d5.5711431000000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf99fa112df603%3A0x74d14e2053fd6ff3!2s31%20Awudome%20Rd%2C%20Accra!5e0!3m2!1sen!2sgh!4v1775456717524!5m2!1sen!2sgh'
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127066.23476553749!2d-0.30213969999999997!3d5.591289699999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf90882d9177b7%3A0x63be902517e5f9e!2sAccra!5e0!3m2!1sen!2sgh!4v1700000000000!5m2!1sen!2sgh'
 
 export default function ContactForm() {
   const [intent, setIntent] = useState<(typeof intents)[number]>('General Enquiry')
@@ -103,7 +112,7 @@ export default function ContactForm() {
                   {error}
                 </div>
               )}
-              <div className="mb-2 grid grid-cols-2 gap-3">
+              <div className="mb-2 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {intents.map((label) => (
                   <button
                     key={label}
@@ -233,7 +242,7 @@ export default function ContactForm() {
           <div className="overflow-hidden rounded-2xl ring-1 ring-gray-100">
             <iframe
               src={MAP_EMBED_SRC}
-              title="31 Awudome Road, Accra — 360 Living Institute on Google Maps"
+              title="Accra, Ghana — approximate location"
               width={600}
               height={450}
               className="h-64 w-full border-0 sm:h-72 lg:h-80"
@@ -244,27 +253,23 @@ export default function ContactForm() {
           </div>
           <div className="mt-4 rounded-2xl bg-brand-pink-pale p-6">
             <p className="font-lora text-lg font-normal text-charcoal">Visit Us</p>
-            <p className="mt-2 font-dm text-sm font-light leading-relaxed text-charcoal-muted">
-              31 Awudome Roundabout, Awudome, Accra, Ghana
-            </p>
-            <p className="mt-1 font-dm text-sm font-light text-charcoal-muted">Monday – Friday: 8:00 AM – 5:00 PM</p>
-            <p className="font-dm text-sm font-light text-charcoal-muted">Saturday: 9:00 AM – 1:00 PM</p>
+            <p className="mt-2 font-dm text-sm font-light leading-relaxed text-charcoal-muted">{company.address}</p>
             <div className="mt-4 border-t border-brand-pink-light pt-4">
               <p className="font-lora text-base font-normal text-charcoal">Quick Connect</p>
               <div className="mt-3 flex flex-col gap-2">
                 <a
-                  href="tel:0538045503"
+                  href={`tel:${company.phone}`}
                   className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 font-dm text-xs font-medium text-charcoal transition-colors hover:border-brand-green/40"
                 >
                   <Phone className="text-brand-green" size={14} strokeWidth={1.75} aria-hidden />
-                  Call: 0538045503
+                  Call: {company.phoneDisplay}
                 </a>
                 <a
-                  href="mailto:info@360livinginstitute.com"
+                  href={`mailto:${company.email}`}
                   className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 font-dm text-xs font-medium text-charcoal transition-colors hover:border-brand-pink/40"
                 >
                   <Mail className="text-brand-pink" size={14} strokeWidth={1.75} aria-hidden />
-                  Email: info@360livinginstitute.com
+                  Email: {company.email}
                 </a>
               </div>
             </div>

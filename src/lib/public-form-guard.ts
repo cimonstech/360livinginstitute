@@ -24,9 +24,17 @@ function readTiming(body: Record<string, unknown>): { tooFast: boolean } {
  */
 export function silentRejectSpam(body: Record<string, unknown>): NextResponse | null {
   if (isBot(body)) {
+    console.warn('[PublicFormGuard] Dropped submission (honeypot filled).')
     return NextResponse.json({ success: true })
   }
   if (readTiming(body).tooFast) {
+    const loaded = body.form_loaded_at
+    const submitted = body.form_submitted_at
+    if (typeof loaded === 'number' && typeof submitted === 'number') {
+      console.warn('[PublicFormGuard] Dropped submission (too fast):', submitted - loaded, 'ms')
+    } else {
+      console.warn('[PublicFormGuard] Dropped submission (too fast).')
+    }
     return NextResponse.json({ success: true })
   }
   return null

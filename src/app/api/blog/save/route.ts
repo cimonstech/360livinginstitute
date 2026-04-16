@@ -33,6 +33,18 @@ export async function POST(request: NextRequest) {
   const coverUrl = raw.cover_image_url != null ? sanitizeHttpsUrl(raw.cover_image_url) : null
   const coverAlt = raw.cover_image_alt != null ? sanitizeString(raw.cover_image_alt) || null : null
   const authorName = raw.author_name != null ? sanitizeString(raw.author_name) || 'Selasi Doku' : 'Selasi Doku'
+  const publishTo =
+    raw.publish_to === 'foundation' || raw.publish_to === 'both' || raw.publish_to === 'institute'
+      ? raw.publish_to
+      : 'institute'
+  const resourceType =
+    raw.resource_type === 'pdf' || raw.resource_type === 'infographic' || raw.resource_type === 'article'
+      ? raw.resource_type
+      : 'article'
+  const category = raw.category != null ? sanitizeString(raw.category) || null : null
+  const attachmentUrl = raw.attachment_url != null ? sanitizeHttpsUrl(raw.attachment_url) : null
+  const attachmentName = raw.attachment_name != null ? sanitizeString(raw.attachment_name) || null : null
+  const attachmentSize = typeof raw.attachment_size === 'number' ? Math.max(0, Math.floor(raw.attachment_size)) : null
   const tagsRaw = Array.isArray(raw.tags) ? raw.tags : []
   const tags = tagsRaw
     .filter((t): t is string => typeof t === 'string')
@@ -48,6 +60,12 @@ export async function POST(request: NextRequest) {
     cover_image_url: coverUrl,
     cover_image_alt: coverAlt,
     author_name: authorName,
+    publish_to: publishTo,
+    resource_type: resourceType,
+    category,
+    attachment_url: attachmentUrl,
+    attachment_name: attachmentName,
+    attachment_size: attachmentSize,
     status: raw.status === 'published' ? 'published' : 'draft',
     featured: Boolean(raw.featured),
     tags,

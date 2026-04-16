@@ -5,117 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Minus, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-type Service = {
-  num: string
-  slug: string
-  title: string
-  tag: string
-  tagColor: 'pink' | 'green'
-  image: string
-  body: string
-  bullets: string[]
-  cta: { label: string; href: string }
-}
-
-const services: Service[] = [
-  {
-    num: '01',
-    slug: 'individual-counselling',
-    title: 'Individual Counselling',
-    tag: 'Personal',
-    tagColor: 'pink',
-    image: '/images/services/individual-counseling.jpeg',
-    body: 'We provide support for personal clarity, healing, and growth — assisting individuals in navigating anxiety, emotional overwhelm, self-discovery, life direction, and personal challenges.',
-    bullets: [
-      'Anxiety & emotional overwhelm',
-      'Self-discovery & life direction',
-      'Personal challenges & resilience building',
-      'Grief, loss & identity shifts',
-    ],
-    cta: { label: 'Book a Session', href: '/book' },
-  },
-  {
-    num: '02',
-    slug: 'corporate-mental-health',
-    title: 'Corporate Mental Health & Wellness',
-    tag: 'Corporate',
-    tagColor: 'green',
-    image: '/images/services/corporate.jpg',
-    body: 'We partner with organisations to improve employee well-being, increase productivity and focus, reduce burnout and absenteeism, and build psychologically safe environments.',
-    bullets: [
-      'Workplace counselling support',
-      'Mental health workshops & seminars',
-      'Psychological safety & first aid',
-      'Wellness in the board',
-    ],
-    cta: { label: 'Partner With Us', href: '/contact#partner' },
-  },
-  {
-    num: '03',
-    slug: 'entrepreneur-wellness',
-    title: 'Entrepreneur Wellness & Performance',
-    tag: 'Business',
-    tagColor: 'pink',
-    image: '/images/portrait-handsome.avif',
-    body: 'Entrepreneurs and business leaders encounter specific psychological challenges including burnout, decision fatigue, leadership pressure, emotional isolation, and work-life imbalance.',
-    bullets: [
-      'Executive counselling sessions',
-      'Founder wellness programs',
-      'Mental resilience training',
-      'Business-life alignment coaching',
-    ],
-    cta: { label: 'Book a Session', href: '/book' },
-  },
-  {
-    num: '04',
-    slug: 'life-transition-counselling',
-    title: '360 Transition Reset Program',
-    tag: 'Transitions',
-    tagColor: 'green',
-    image: '/images/services/360transition-reset.jpg',
-    body: 'Life transitions often create confusion and emotional strain. We support you through major shifts so you can move forward with clarity and purpose.',
-    bullets: [
-      'Career changes & reinvention',
-      'Marriage & parenting transitions',
-      'Loss, grief & bereavement',
-      'Identity shifts & personal reinvention',
-    ],
-    cta: { label: 'Book a Session', href: '/book' },
-  },
-  {
-    num: '05',
-    slug: 'family-relationship-counselling',
-    title: 'Family & Relationship Counselling',
-    tag: 'Family',
-    tagColor: 'pink',
-    image: '/images/services/family.jpg',
-    body: 'We address issues related to couples, parenting, family dynamics, communication, and conflict resolution to foster healthier, more connected relationships.',
-    bullets: [
-      'Couples counselling & communication',
-      'Parenting & family dynamics',
-      'Conflict resolution strategies',
-      'Rebuilding trust & connection',
-    ],
-    cta: { label: 'Book a Session', href: '/book' },
-  },
-  {
-    num: '06',
-    slug: 'psychoeducation-training',
-    title: 'Psychoeducation & Training',
-    tag: 'Training',
-    tagColor: 'green',
-    image: '/images/services/Psychoeducation.jpg',
-    body: 'We offer workshops, seminars, and educational programs designed to build mental health literacy and practical psychological skills for individuals and groups.',
-    bullets: [
-      'Mental health workshops',
-      'Seminars & educational programs',
-      'Emotional intelligence training',
-      'Invite us to speak at your event',
-    ],
-    cta: { label: 'Invite Us to Speak', href: '/contact#speak' },
-  },
-]
+import { programsAccordion } from '@/data/content'
 
 export default function ServicesAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -127,7 +17,7 @@ export default function ServicesAccordion() {
   return (
     <section className="bg-white py-4">
       <div className="mx-auto max-w-7xl divide-y divide-gray-100 px-6 lg:px-10">
-        {services.map((service, index) => {
+        {programsAccordion.map((service, index) => {
           const isOpen = openIndex === index
           return (
             <div key={service.num} id={service.slug} className="scroll-mt-28">
@@ -169,10 +59,14 @@ export default function ServicesAccordion() {
                   <div>
                     <p className="font-dm text-sm font-light leading-relaxed text-charcoal-muted">{service.body}</p>
                     <ul className="mt-4 flex flex-col gap-2">
-                      {service.bullets.map((b) => (
+                      {service.bullets.map((b, bi) => (
                         <li key={b} className="flex items-start gap-2 font-dm text-sm font-light text-charcoal-muted">
                           <span
-                            className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-pink"
+                            className={
+                              bi % 2 === 0
+                                ? 'mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-green'
+                                : 'mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-pink'
+                            }
                             aria-hidden
                           />
                           {b}
@@ -181,7 +75,11 @@ export default function ServicesAccordion() {
                     </ul>
                     <Link
                       href={service.cta.href}
-                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-pink px-6 py-2.5 font-dm text-sm font-medium text-white transition-opacity hover:opacity-90"
+                      className={
+                        service.cta.href.includes('partner')
+                          ? 'mt-6 inline-flex items-center gap-2 rounded-full bg-brand-green px-6 py-2.5 font-dm text-sm font-medium text-white transition-opacity hover:opacity-90'
+                          : 'mt-6 inline-flex items-center gap-2 rounded-full bg-brand-pink px-6 py-2.5 font-dm text-sm font-medium text-white transition-opacity hover:opacity-90'
+                      }
                     >
                       {service.cta.label}
                       <ArrowRight size={14} aria-hidden />

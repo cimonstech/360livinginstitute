@@ -10,9 +10,10 @@ const config: Config = {
           pink: '#E8007D',
           'pink-light': '#F5A0CE',
           'pink-pale': '#FDF0F7',
-          green: '#2D7A3A',
-          'green-light': '#A8D5AF',
-          'green-pale': '#EEF7F0',
+          /** Logo tree — secondary accent */
+          green: '#2D7D5E',
+          'green-light': '#6BA88C',
+          'green-pale': '#E8F2EE',
         },
         charcoal: {
           DEFAULT: '#3D3D3D',

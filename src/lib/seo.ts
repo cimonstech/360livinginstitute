@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 export const DEFAULT_OG_IMAGE = '/images/african-psychologist.webp' as const
 
 const OG_IMAGE_ALT =
-  'Professional psychological care and counselling — 360 Living Institute, Accra, Ghana'
+  '360 Living Foundation — counselling, mentorship, and life development in Accra, Ghana'
 
 export function publicSiteOrigin(): string {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim()
@@ -21,7 +21,7 @@ export function metadataBaseUrl(): URL {
 export const rootOpenGraphDefaults = {
   type: 'website' as const,
   locale: 'en_GH',
-  siteName: '360 Living Institute',
+  siteName: '360 Living Foundation',
   images: [
     {
       url: DEFAULT_OG_IMAGE,

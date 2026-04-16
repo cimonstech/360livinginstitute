@@ -2,21 +2,19 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Menu, X, ArrowRight } from 'lucide-react'
-import type { User } from '@supabase/supabase-js'
-import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
+import TopContactBar from '@/components/layout/TopContactBar'
 
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
-  { label: 'Services', href: '/services' },
-  { label: 'Our Team', href: '/team' },
-  { label: 'Live Life Well', href: '/blog' },
-  { label: 'Events', href: '/events' },
+  { label: 'Programs', href: '/programs' },
+  { label: 'Get Involved', href: '/get-involved' },
+  { label: 'Resources', href: '/resources' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -27,52 +25,12 @@ function pathMatchesNav(pathname: string, href: string) {
 
 const linkBase = 'font-dm text-sm transition-colors'
 const linkInactive = `${linkBase} text-charcoal-muted hover:text-charcoal`
-const linkActive = `${linkBase} text-charcoal underline decoration-brand-pink decoration-2 underline-offset-[6px]`
+const linkActive = `${linkBase} text-charcoal underline decoration-brand-green decoration-2 underline-offset-[6px]`
 
 export default function Navbar() {
   const pathname = usePathname()
-  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [menuMounted, setMenuMounted] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
-  /** Loaded after session — admins should not be steered to the client bookings area only */
-  const [portalRole, setPortalRole] = useState<'admin' | 'client' | null>(null)
-
-  async function signOut() {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.push('/')
-    setOpen(false)
-  }
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-    })
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-    return () => subscription.unsubscribe()
-  }, [])
-
-  useEffect(() => {
-    if (!user) {
-      setPortalRole(null)
-      return
-    }
-    const supabase = createClient()
-    void supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        setPortalRole(data?.role === 'admin' ? 'admin' : 'client')
-      })
-  }, [user])
 
   useEffect(() => {
     if (!open) return
@@ -102,124 +60,69 @@ export default function Navbar() {
 
   const mobileMenu = menuMounted
     ? createPortal(
-      <div className="lg:hidden" aria-hidden={!open}>
-        <button
-          type="button"
-          tabIndex={open ? 0 : -1}
-          className={cn(
-            'fixed bottom-0 left-0 right-0 top-16 z-[500] bg-charcoal/40 transition-opacity duration-300',
-            open ? 'opacity-100' : 'pointer-events-none opacity-0'
-          )}
-          onClick={() => setOpen(false)}
-          aria-label="Close menu"
-        />
-        <aside
-          id="mobile-nav-drawer"
-          className={cn(
-            'fixed bottom-0 right-0 top-16 z-[510] flex w-[min(20rem,calc(100vw-2rem))] max-w-full flex-col bg-white shadow-[-4px_0_24px_rgba(61,61,61,0.12)] transition-transform duration-300 ease-out motion-reduce:transition-none',
-            open ? 'translate-x-0' : 'translate-x-full pointer-events-none'
-          )}
-        >
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-4">
-            <ul className="flex list-none flex-col border-b border-charcoal/10 pb-4">
-              {navLinks.map((link) => {
-                const active = pathMatchesNav(pathname, link.href)
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      className={cn('block py-3', active ? linkActive : linkInactive)}
-                      aria-current={active ? 'page' : undefined}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-            <div className="flex flex-col gap-3 pt-4">
-              {user ? (
-                <>
-                  {portalRole === null ? (
-                    <span className="block py-2 font-dm text-sm text-charcoal-muted">Loading…</span>
-                  ) : portalRole === 'admin' ? (
-                    <Link
-                      href="/admin"
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        'block py-3',
-                        pathMatchesNav(pathname, '/admin') ? linkActive : linkInactive
-                      )}
-                      aria-current={pathMatchesNav(pathname, '/admin') ? 'page' : undefined}
-                    >
-                      Admin
-                    </Link>
-                  ) : (
-                    <Link
-                      href="/dashboard"
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        'block py-3',
-                        pathMatchesNav(pathname, '/dashboard') ? linkActive : linkInactive
-                      )}
-                      aria-current={pathMatchesNav(pathname, '/dashboard') ? 'page' : undefined}
-                    >
-                      My Bookings
-                    </Link>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => void signOut()}
-                    className="font-dm w-full rounded-full border border-gray-200 px-4 py-3 text-sm text-charcoal-muted transition-colors hover:bg-charcoal-light"
-                  >
-                    Sign Out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    onClick={() => setOpen(false)}
-                    className={cn('block py-3', pathname.startsWith('/login') ? linkActive : linkInactive)}
-                    aria-current={pathname.startsWith('/login') ? 'page' : undefined}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/book"
-                    onClick={() => setOpen(false)}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-pink py-3 font-dm text-sm font-medium text-white"
-                  >
-                    Book Appointment
-                    <ArrowRight size={14} aria-hidden />
-                  </Link>
-                </>
-              )}
-              <Link
-                href="https://360livingfoundation.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-2 text-center font-dm text-xs text-charcoal-muted/50"
-              >
-                360Living Foundation ↗
-              </Link>
+        <div className="lg:hidden" aria-hidden={!open}>
+          <button
+            type="button"
+            tabIndex={open ? 0 : -1}
+            className={cn(
+              'fixed bottom-0 left-0 right-0 top-16 z-[500] bg-charcoal/40 transition-opacity duration-300',
+              open ? 'opacity-100' : 'pointer-events-none opacity-0'
+            )}
+            onClick={() => setOpen(false)}
+            aria-label="Close menu"
+          />
+          <aside
+            id="mobile-nav-drawer"
+            className={cn(
+              'fixed bottom-0 right-0 top-16 z-[510] flex w-[min(20rem,calc(100vw-2rem))] max-w-full flex-col bg-white shadow-[-4px_0_24px_rgba(61,61,61,0.12)] transition-transform duration-300 ease-out motion-reduce:transition-none',
+              open ? 'translate-x-0' : 'translate-x-full pointer-events-none'
+            )}
+          >
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-4">
+              <ul className="flex list-none flex-col border-b border-charcoal/10 pb-4">
+                {navLinks.map((link) => {
+                  const active = pathMatchesNav(pathname, link.href)
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className={cn('block py-3', active ? linkActive : linkInactive)}
+                        aria-current={active ? 'page' : undefined}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+              <div className="flex flex-col gap-3 pt-4">
+                <Link
+                  href="/get-involved#apply"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-pink py-3 font-dm text-sm font-medium text-white"
+                >
+                  Apply Now
+                  <ArrowRight size={14} aria-hidden />
+                </Link>
+              </div>
             </div>
-          </div>
-        </aside>
-      </div>,
-      document.body
-    )
+          </aside>
+        </div>,
+        document.body
+      )
     : null
 
   return (
     <>
-      <nav className="sticky top-0 z-[520] border-b border-charcoal/10 bg-white lg:z-[100]">
+      <header className="sticky top-0 z-[520] lg:z-[100]">
+        <TopContactBar />
+        <nav className="border-b border-brand-green/15 bg-white">
         <div className="relative mx-auto flex h-16 max-w-7xl items-center gap-4 px-6 lg:px-10">
           <Link href="/" className="relative h-9 w-[140px] flex-shrink-0">
             <Image
-              src="/images/logo2.png"
-              alt="360 Living Institute"
+              src="/images/Logo-1.png"
+              alt="360 Living Foundation"
               fill
               className="object-contain object-left"
               sizes="140px"
@@ -242,62 +145,12 @@ export default function Navbar() {
 
           <div className="ml-auto hidden items-center gap-4 lg:flex">
             <Link
-              href="https://360livingfoundation.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-dm text-xs text-charcoal-muted/50 transition-colors hover:text-charcoal-muted"
+              href="/get-involved#apply"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-pink px-5 py-2 font-dm text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
-              360Living Foundation ↗
+              Apply Now
+              <ArrowRight size={14} aria-hidden />
             </Link>
-            {user ? (
-              <>
-                {portalRole === null ? (
-                  <span className="font-dm text-sm text-charcoal-muted tabular-nums w-[5.5rem] text-center" aria-label="Loading menu">
-                    ···
-                  </span>
-                ) : portalRole === 'admin' ? (
-                  <Link
-                    href="/admin"
-                    className={pathMatchesNav(pathname, '/admin') ? linkActive : linkInactive}
-                    aria-current={pathMatchesNav(pathname, '/admin') ? 'page' : undefined}
-                  >
-                    Admin
-                  </Link>
-                ) : (
-                  <Link
-                    href="/dashboard"
-                    className={pathMatchesNav(pathname, '/dashboard') ? linkActive : linkInactive}
-                    aria-current={pathMatchesNav(pathname, '/dashboard') ? 'page' : undefined}
-                  >
-                    My Bookings
-                  </Link>
-                )}
-                <button
-                  type="button"
-                  onClick={() => void signOut()}
-                  className="font-dm rounded-full border border-gray-200 px-4 py-2 text-sm text-charcoal-muted transition-colors hover:bg-charcoal-light"
-                >
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className={pathname.startsWith('/login') ? linkActive : linkInactive}
-                  aria-current={pathname.startsWith('/login') ? 'page' : undefined}
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/book"
-                  className="inline-flex items-center gap-2 rounded-full bg-brand-pink px-5 py-2 font-dm text-sm font-medium text-white transition-opacity hover:opacity-90"
-                >
-                  Book Appointment
-                  <ArrowRight size={14} aria-hidden />
-                </Link>
-              </>
-            )}
           </div>
 
           <button
@@ -311,7 +164,8 @@ export default function Navbar() {
             {open ? <X size={22} strokeWidth={2} /> : <Menu size={22} strokeWidth={2} />}
           </button>
         </div>
-      </nav>
+        </nav>
+      </header>
 
       {mobileMenu}
     </>

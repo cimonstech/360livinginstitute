@@ -11,22 +11,22 @@ import AboutCTA from '@/components/about/AboutCTA'
 import Footer from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'About Us | 360 Living Institute',
+  title: 'About Us | 360 Living Foundation',
   description:
-    'Learn about 360 Living Institute — a center for psychological insight, counselling, and life development in Accra, Ghana.',
+    'Learn about 360 Living Foundation — the social impact arm of the 360 Living Institute. Counselling, mentorship, and life development in Accra, Ghana.',
   alternates: canonicalPath('/about'),
   openGraph: {
     ...rootOpenGraphDefaults,
-    title: 'About Us | 360 Living Institute',
+    title: 'About Us | 360 Living Foundation',
     description:
-      'Learn about 360 Living Institute — a center for psychological insight, counselling, and life development in Accra, Ghana.',
+      'Vision, mission, and story — accessible mental health support and community programmes.',
     url: '/about',
   },
   twitter: {
     ...rootTwitterDefaults,
-    title: 'About Us | 360 Living Institute',
+    title: 'About Us | 360 Living Foundation',
     description:
-      'Learn about 360 Living Institute — a center for psychological insight, counselling, and life development in Accra, Ghana.',
+      'Vision, mission, and story — accessible mental health support and community programmes.',
   },
 }
 

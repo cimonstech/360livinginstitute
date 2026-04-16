@@ -1,277 +1,542 @@
 // ─────────────────────────────────────────────────────────────
-// 360 Living Institute — Site Content
-// Single source of truth for all website copy and data.
-// Update this file when content changes; components pull from here.
+// 360 Living Foundation — Site Content
+// Single source of truth for public marketing copy.
 // ─────────────────────────────────────────────────────────────
 
-// ── COMPANY INFO ─────────────────────────────────────────────
+export const institute = {
+  name: '360 Living Institute',
+  url: 'https://360livinginstitute.com',
+} as const
+
 export const company = {
-  name: "360 Living Institute",
-  tagline: "Transforming Lives Through Psychological Insight & Life Development",
-  email: "info@360livinginstitute.com",
-  phone: "0538045503",
-  address: "31 Awudome Roundabout, Awudome, Accra",
+  name: '360 Living Foundation',
+  tagline: 'Heal, Grow and Rise!',
+  email: 'info@360livingfoundation.org',
+  phone: '0264589293',
+  phoneDisplay: '0264589293',
+  address: 'Accra, Ghana',
   socials: {
-    // Add handles when available
-    instagram: "",
-    linkedin: "",
-    facebook: "",
+    instagram: '',
+    linkedin: '',
+    facebook: '',
   },
-}
+} as const
 
 // ── HOMEPAGE ─────────────────────────────────────────────────
 export const homepage = {
   hero: {
-    headline: "Understanding Life Transitions — The Hidden Key to Well-being.",
-    subheadline:
-      "Many life challenges stem from a lack of insight into transition: career shifts, marriage, parenting, identity, loss, and personal growth.",
-    body: "At 360 Living Institute, we help individuals, families, and organisations understand life transitions, build resilience, and thrive mentally, emotionally, socially and economically.",
+    headlineLines: [
+      'Transforming Minds.',
+      'Empowering Lives.',
+      'Building a Thriving Society.',
+    ],
+    supporting:
+      'We equip individuals, especially youth and women, with the tools to navigate life, build resilience, and live purposefully through counselling, mentorship, and personal development.',
     ctas: [
-      { label: "Book a Session", href: "/book" },
-      { label: "Partner With Us", href: "/contact#partner" },
-      { label: "Explore Programs", href: "/services" },
+      { label: 'Apply for a Program', href: '/get-involved#apply' },
+      { label: 'Partner With Us', href: '/get-involved#partner' },
+    ],
+    joinMovement: 'Join the Movement',
+  },
+
+  trustBar: [
+    'Counselling & mentorship',
+    'Training programmes',
+    'Community engagement',
+    'Grounded in the RNCC model',
+  ],
+
+  purpose: {
+    eyebrow: 'Our Purpose',
+    body:
+      'The Foundation exists to bridge the gap between potential and reality through counselling, mentorship, and life development programmes.',
+    ctas: [
+      { label: 'Apply for a Program', href: '/get-involved#apply' },
+      { label: 'Partner With Us', href: '/get-involved#partner' },
     ],
   },
 
   whoWeAre: {
-    heading: "Who We Are",
-    body: [
-      "360 Living Institute was founded on a simple but powerful belief: People don't just need solutions — they need understanding.",
-      "Through years of counselling, research, and real-life engagement, we discovered that many emotional struggles are rooted in unrecognised life transitions.",
-      "360 Living Institute is a center for psychological insight, counselling, and life development. We exist to help people understand where they are in life, why they feel stuck, and how to move forward with clarity and purpose.",
+    eyebrow: 'Who We Are',
+    titleLine1: 'When individuals are empowered,',
+    titleEmphasis: 'communities thrive.',
+    paragraphs: [
+      'The 360 Living Foundation is a transformative organisation committed to improving mental well-being and personal development through accessible, culturally relevant counselling and mentorship programmes.',
+      'We believe that when individuals are mentally and emotionally empowered, they become catalysts for stronger families, healthier workplaces, and a thriving nation.',
     ],
   },
 
-  whoWeServe: [
-    "Individuals seeking clarity and healing",
-    "Couples and families",
-    "Entrepreneurs and executives",
-    "Corporate organizations",
-    "Youth and young adults",
-  ],
-
-  whyChooseUs:
-    "Confidentiality is essential to your entire life. At 360 Living, we create personalised plans tailored specifically for you, drawing from a person-centered approach with a wealth of knowledge and advanced techniques. Our goal is to help our clients become their truest selves by examining every aspect of their lives and collaboratively developing strategies for growth, personal development, and navigating transitional periods.",
-
-  finalCta: {
-    heading: "Your next level begins with understanding your current season.",
-    subheading: "Take the first step toward clarity and transformation.",
-    actions: [
-      { label: "Book a counselling session", href: "/book" },
-      { label: "Partner as an organisation", href: "/contact#partner" },
-      { label: "Invite us to speak", href: "/contact#speak" },
-      { label: "Sponsor a program", href: "/contact#sponsor" },
+  aboutSnippet: {
+    eyebrow: 'About Us',
+    paragraphs: [
+      '360 Living Foundation was born out of a deep need to make mental health support more accessible, relatable, and transformative. Recognising the growing challenges faced by youth, women and families, the Foundation was established to bridge the gap between psychological knowledge and everyday living.',
+      'The Foundation operates as the social impact arm of the 360 Living Institute, translating psychological knowledge into practical, community-based interventions that foster wholeness, clarity, and sustainable growth.',
     ],
   },
-}
+
+  /** Homepage “Who we are” visual — single image + overlay card */
+  aboutVisual: {
+    imageSrc: '/images/togetherness.jpg',
+    imageAlt: 'Community and togetherness',
+    cardTitle: 'Training & growth',
+    cardBody: 'Practical tools for individuals, families, and communities.',
+  },
+
+  healGrowRise: {
+    eyebrow: 'Heal · Grow · Rise',
+    title: 'Building a Thriving Society.',
+    pillars: [
+      {
+        title: 'Heal',
+        body:
+          'Restoring emotional and mental well-being involves letting go of past hurts and limiting beliefs. Healing lays the groundwork for progress with strength, clarity, peace, and insight, fostering lasting change.',
+      },
+      {
+        title: 'Grow',
+        body:
+          'Enhancing your skills, mindset, and personal capacity. Learning, adapting, and building resilience. Growth equips you to step confidently into your purpose.',
+      },
+      {
+        title: 'Rise',
+        body:
+          'Taking action and fully embracing your potential. Applying learned lessons while pursuing meaningful goals. Through legacy, leadership, and contribution, you transform growth into lasting success and fulfilment.',
+      },
+    ],
+  },
+
+  programsPreview: {
+    eyebrow: 'Our Programs',
+    title: 'Meet people where they are',
+    intro:
+      'Structured programmes designed for different stages of life and growth — from inspiration to transformation to acceleration.',
+    ctas: [
+      { label: 'Apply Now', href: '/get-involved#apply' },
+      { label: 'Explore all programmes', href: '/programs' },
+    ],
+    items: [
+      {
+        slug: 'thrive360-experience',
+        title: 'Thrive360 Experience',
+        summary: 'A powerful mental well-being event for inspiration, reflection, and collective empowerment.',
+      },
+      {
+        slug: 'transformation-lab',
+        title: '360 Transformation Lab',
+        summary: 'Foundational work on identity, mindset, and life skills for sustainable change.',
+      },
+      {
+        slug: 'thrive360-accelerator',
+        title: 'Thrive360 Accelerator',
+        summary: 'Growth for clarity, leadership, and advancement in career and life.',
+      },
+      {
+        slug: 'community-outreach',
+        title: 'Community Outreach',
+        summary: 'Partnering with organisations to deliver education, training, and support at scale.',
+      },
+      {
+        slug: 'mentorship',
+        title: 'Mentorship Programmes',
+        summary: 'Structured mentorship for life guidance, career direction, and transitions.',
+      },
+      {
+        slug: 'mental-health-awareness',
+        title: 'Mental Health Awareness',
+        summary: 'Breaking stigma and increasing understanding, access, and conversation.',
+      },
+    ],
+  },
+
+  approach: {
+    eyebrow: 'Our Approach',
+    title: 'Counselling, mentorship, and community — with a proven model',
+    intro:
+      'We use a unique blend of counselling, mentorship, training programmes, and community engagement — all grounded in our proprietary RNCC (Resilient Narrative-Centered Counselling) Model, which helps individuals reshape their stories and build resilience.',
+    bullets: ['Counselling', 'Mentorship', 'Training programmes', 'Community engagement'],
+  },
+
+  impactGoals: {
+    eyebrow: 'Impact Goals',
+    title: 'What we are working toward',
+    items: [
+      'Increase access to mental health education and counselling.',
+      'Empower youth and women with life skills and resilience tools.',
+      'Reduce stigma around mental health in Ghana and beyond.',
+      'Position counselling as a national developmental tool.',
+      'Influence policy and advocacy in mental health and development.',
+      'Improve life decision-making.',
+      'Strengthen families and communities.',
+    ],
+  },
+
+  focusAreas: {
+    eyebrow: 'Our Focus Areas',
+    title: 'Where we concentrate our work',
+    areas: [
+      {
+        title: 'Youth Development',
+        subtitle: 'Helping young people:',
+        bullets: ['Understand themselves', 'Build confidence', 'Make informed life decisions'],
+      },
+      {
+        title: 'Women Empowerment',
+        subtitle: 'Supporting women to:',
+        bullets: ['Grow personally and professionally', 'Navigate relationships', 'Build emotional strength'],
+      },
+      {
+        title: 'Mental Health Awareness',
+        subtitle: 'Breaking stigma and increasing:',
+        bullets: ['Understanding', 'Access', 'Conversations around mental health'],
+      },
+      {
+        title: 'Mentorship Programmes',
+        subtitle: 'Structured mentorship for:',
+        bullets: [
+          'Life guidance / personal growth',
+          'Career direction',
+          'Mental health awareness',
+          'Life transitions support',
+          'Community well-being',
+        ],
+      },
+    ],
+  },
+
+  testimonials: {
+    eyebrow: 'Success Stories',
+    items: [
+      {
+        quote: '360 Living helped me rediscover my confidence and direction in life.',
+        attribution: 'Program Participant',
+      },
+    ],
+    sidebarQuote: {
+      quote:
+        'Transformation becomes possible when people gain clarity, support, and practical tools for the season they are in.',
+      attribution: 'Foundation participant',
+    },
+  },
+
+  journeyBanner: {
+    title: 'Your journey to clarity, resilience, and purpose starts here.',
+    ctas: [
+      { label: 'Apply Now', href: '/get-involved#apply' },
+      { label: 'Partner With Us', href: '/get-involved#partner' },
+    ],
+  },
+
+  ctaSection: {
+    eyebrow: 'Contact',
+    title: 'Ready to take the next step?',
+    intro: 'Reach out — we would love to hear from you and help you find the right programme or partnership.',
+    primaryCta: { label: 'Go to contact form', href: '/contact' },
+    phoneNotePrefix: 'Or call us directly:',
+  },
+} as const
 
 // ── ABOUT PAGE ───────────────────────────────────────────────
 export const about = {
-  intro:
-    "The 360 Living Institute is a center for psychological insight, counselling, and life development. We are dedicated to helping individuals, families, and organizations achieve wholeness through structured, evidence-based transformation. Our focus is on guiding people through life transitions such as identity, survival, growth, expansion, and finding meaning while emphasizing prevention over crisis management.",
-
-  model:
-    "Utilizing our integrated RNCC model, we combine three counselling approaches to foster emotional intelligence, resilience, and purposeful living. At the Institute, we provide individuals and organisations with practical tools, insights, and systems to enhance well-being, productivity, and sustainable growth. We position mental health as a key driver for personal, organisational, and national development.",
+  hero: {
+    eyebrow: 'About Us',
+    titleLines: ['Bridging potential', 'and reality through', 'impact & care'],
+    lead:
+      'The 360 Living Foundation exists to bridge the gap between potential and reality through counselling, mentorship, and life development programmes — especially for youth and women.',
+    heroImageSrc: '/images/stressed-black-woman.jpg',
+    heroImageAlt: 'Seeking support for mental well-being',
+    floatingCard: {
+      title: 'Programmes & outreach',
+      subtitle: 'Counselling, mentorship, and community impact',
+    },
+  },
 
   story: {
-    heading: "Our Story",
+    heading: 'Our Story',
+    subheading: 'Accessible mental health support that meets people in real life.',
     paragraphs: [
-      "At 360 Living Institute, we believe that every individual is on a journey — a journey shaped by experiences, decisions, and life transitions that are often unseen but deeply felt.",
-      "Many people are not stuck because they lack ability; they are stuck because they lack clarity, insight, and support. We exist to change that.",
-      "We don't just listen to your story — we help you understand it, reframe it, and grow from it.",
-      "Our approach is rooted in deep psychological understanding and guided by the belief that: When people gain insight into their lives, transformation becomes possible.",
-      "Whether you are navigating personal struggles, family challenges, career transitions, or the demands of leadership and entrepreneurship, we walk with you to build resilience, restore clarity, and support lasting change.",
-      "At 360 Living Institute, transformation is not an event; it is a process we walk with you, step by step.",
+      '360 Living Foundation was born out of a deep need to make mental health support more accessible, relatable, and transformative.',
+      'Recognising the growing challenges faced by youth, women and families, the Foundation was established to bridge the gap between psychological knowledge and everyday living.',
+      'The Foundation operates as the social impact arm of the 360 Living Institute, translating psychological knowledge into practical, community-based interventions that foster wholeness, clarity, and sustainable growth.',
     ],
+    quote: 'Heal, Grow and Rise!',
   },
-
-  mission:
-    "To offer accessible psychological support, insights, and tools that assist individuals, families, and organisations in effectively navigating life.",
 
   vision:
-    "To become a leading global center for life transition psychology, counselling, and human development.",
+    'To build a society where individuals are mentally empowered, emotionally intelligent, and purpose-driven, contributing meaningfully to personal, family, and national development.',
 
-  values: [
-    { name: "Confidentiality", desc: "Your privacy is sacred. Everything shared stays protected." },
-    { name: "Empathy", desc: "We meet you where you are, without judgment." },
-    { name: "Insight", desc: "We go beyond symptoms to help you understand the root." },
-    { name: "Innovation", desc: "We use evidence-based, forward-thinking approaches." },
-    { name: "Transformation", desc: "We walk with you through lasting, meaningful change." },
+  mission:
+    'To use counselling, mentorship, and structured development programmes to transform mindsets, strengthen resilience, and support individuals in navigating life transitions with clarity and confidence. To equip individuals, families, and communities with the tools to thrive in life.',
+
+  beliefs: [
+    {
+      title: 'Mental health is essential',
+      desc: 'Mental health is essential, not optional.',
+    },
+    {
+      title: 'Access for everyone',
+      desc: 'Everyone deserves access to support and growth tools.',
+    },
+    {
+      title: 'Sustainable transformation',
+      desc: 'Transformation should be practical, structured, and sustainable.',
+    },
   ],
+
+  beliefsSection: {
+    eyebrow: 'What We Believe',
+    title: 'Principles that shape our programmes',
+    intro: 'Our beliefs keep our work grounded, practical, and inclusive.',
+  },
+
+  model: {
+    eyebrow: 'Our Approach',
+    title: 'The RNCC model — Resilient Narrative-Centered Counselling',
+    paragraphs: [
+      'We combine counselling, mentorship, training programmes, and community engagement — grounded in our proprietary RNCC (Resilient Narrative-Centered Counselling) Model — to help individuals reshape their stories and build resilience.',
+      'As the social impact arm of the 360 Living Institute, we translate psychological insight into practical interventions for wholeness and sustainable growth.',
+    ],
+  },
+
+  institutePartnership: {
+    eyebrow: 'Our Roots',
+    title: 'Part of the 360 Living Institute family',
+    body:
+      'The Foundation extends the Institute’s mission into communities — making mental well-being support more accessible through programmes, partnerships, and outreach.',
+    cta: { label: `Visit ${institute.name}`, href: institute.url },
+  },
+
+  cta: {
+    eyebrow: 'Get Involved',
+    title: 'Your journey starts with one intentional step.',
+    intro: 'Apply for a programme, partner with us, or explore ways to volunteer and sponsor impact.',
+    actions: [
+      { label: 'Apply Now', href: '/get-involved#apply' },
+      { label: 'Partner With Us', href: '/get-involved#partner' },
+      { label: 'Volunteer', href: '/get-involved#volunteer' },
+      { label: 'Sponsor or Donate', href: '/get-involved#sponsor' },
+    ],
+  },
+} as const
+
+// Accordion items (same shape as ServicesAccordion)
+export type ProgramAccordionItem = {
+  num: string
+  slug: string
+  title: string
+  tag: string
+  tagColor: 'pink' | 'green'
+  image: string
+  body: string
+  bullets: string[]
+  cta: { label: string; href: string }
 }
 
-// ── SERVICES ─────────────────────────────────────────────────
-export const services = [
+export const programsAccordion: ProgramAccordionItem[] = [
   {
-    slug: "individual-counselling",
-    title: "Individual Counselling",
-    summary:
-      "Support for personal clarity, healing, and growth.",
-    body: "We provide support for personal clarity, healing, and growth, assisting individuals in navigating anxiety, emotional overwhelm, self-discovery, life direction, and personal challenges.",
-    cta: { label: "Book a Session", href: "/book" },
-  },
-  {
-    slug: "corporate-mental-health",
-    title: "Corporate Mental Health & Wellness",
-    summary: "Building mentally healthy and high-performing workplaces.",
-    body: "We partner with organisations to improve employee well-being, increase productivity and focus, reduce burnout and absenteeism, and build psychologically safe environments.",
+    num: '01',
+    slug: 'thrive360-experience',
+    title: 'Thrive360 Experience',
+    tag: 'Experience',
+    tagColor: 'pink',
+    image: '/images/services/individual-counseling.jpeg',
+    body:
+      'The Thrive360 Experience is a powerful mental well-being event designed to inspire personal transformation and connect individuals with meaningful growth opportunities. The event brings together participants for a journey of learning, deep reflection, and lasting change. Through a supportive environment, attendees can engage in activities and discussions that foster both self-discovery and collective empowerment, making the Thrive360 Experience a catalyst for holistic development.',
     bullets: [
-      "Workplace counselling support",
-      "Mental health workshops",
-      "Psychological safety and first aid",
-      "Wellness in the board",
+      'Learning and deep reflection in a supportive environment',
+      'Self-discovery and collective empowerment',
+      'A catalyst for holistic development',
     ],
-    cta: { label: "Partner With Us", href: "/contact#partner" },
+    cta: { label: 'Apply Now', href: '/get-involved#apply' },
   },
   {
-    slug: "entrepreneur-wellness",
-    title: "Entrepreneur Wellness & Performance Support",
-    summary: "Specialised support for founders and business leaders.",
-    body: "Entrepreneurs and business leaders encounter specific psychological challenges including burnout, decision fatigue, leadership pressure, emotional isolation, and work-life imbalance.",
+    num: '02',
+    slug: 'transformation-lab',
+    title: '360 Transformation Lab',
+    tag: 'Foundation',
+    tagColor: 'green',
+    image: '/images/accessible-mental-health-support.jpg',
+    body:
+      'A foundational programme for individuals focusing on identity, mindset, and life skills. It explores the participants’ stage of life to facilitate the transformation needed to rise.',
+    bullets: ['Identity and purpose discovery', 'Build emotional intelligence', 'Developing life skills'],
+    cta: { label: 'Apply Now', href: '/get-involved#apply' },
+  },
+  {
+    num: '03',
+    slug: 'thrive360-accelerator',
+    title: 'Thrive360 Accelerator',
+    tag: 'Growth',
+    tagColor: 'pink',
+    image: '/images/african-psychologist.webp',
+    body:
+      'A programme focused on growth for individuals seeking clarity, leadership, and advancement. This programme is designed to help participants rise with confidence.',
     bullets: [
-      "Executive counselling sessions",
-      "Founder wellness programs — relationships, communication, conflict resolution",
-      "Mental resilience training",
-      "Business-life alignment coaching",
+      'Gain clarity in career and life direction',
+      'Strengthen leadership capacity',
+      'Achieve personal and professional goals',
     ],
-    cta: { label: "Book a Session", href: "/book" },
+    cta: { label: 'Apply Now', href: '/get-involved#apply' },
   },
   {
-    slug: "life-transition-counselling",
-    title: "360 Transition Reset Program",
-    summary: "Guiding you through life's turning points.",
-    body: "Life transitions often create confusion and emotional strain. We provide support through major shifts so you can move forward with clarity and purpose.",
+    num: '04',
+    slug: 'community-outreach',
+    title: 'Community Outreach',
+    tag: 'Partnerships',
+    tagColor: 'green',
+    image: '/images/community-outreach.jpg',
+    body: 'We partner with organisations to deliver practical mental health education and skills training in communities.',
     bullets: [
-      "Career changes",
-      "Marriage and parenting",
-      "Loss and grief",
-      "Personal reinvention",
-      "Identity shifts",
+      'Mental health education',
+      'Life skills training',
+      'Transition awareness programmes',
+      'Leadership and emotional intelligence training',
+      'Family and community support workshops',
     ],
-    cta: { label: "Book a Session", href: "/book" },
-  },
-  {
-    slug: "family-relationship-counselling",
-    title: "Family & Relationship Counselling",
-    summary: "Enhancing relationships and promoting harmony.",
-    body: "We address issues related to couples, parenting, family dynamics, communication, and conflict resolution to foster healthier, more connected relationships.",
-    cta: { label: "Book a Session", href: "/book" },
-  },
-  {
-    slug: "psychoeducation-training",
-    title: "Psychoeducation & Training",
-    summary: "Equipping individuals and groups with mental health knowledge.",
-    body: "We offer workshops, seminars, and educational programs designed to build mental health literacy and practical psychological skills.",
-    bullets: ["Workshops", "Seminars", "Educational programs"],
-    cta: { label: "Invite Us to Speak", href: "/contact#speak" },
+    cta: { label: 'Partner With Us', href: '/get-involved#partner' },
   },
 ]
 
-// ── EVENTS & PROGRAMS ────────────────────────────────────────
-export const events = [
-  {
-    slug: "thrive360",
-    title: "Thrive360 Experience",
-    desc: "A holistic mental well-being experience.",
+export const programsPage = {
+  hero: {
+    eyebrow: 'Our Programs',
+    titleLines: ['Structured programmes', 'for every stage', 'of growth'],
+    intro:
+      'We offer structured programmes designed to meet individuals at different stages of life and growth — grounded in counselling, mentorship, and practical development.',
   },
-  {
-    slug: "complete-living-series",
-    title: "Complete Living Series Webinar",
-    desc: "Online sessions exploring life development themes.",
-  },
-  {
-    slug: "personal-development-cohorts",
-    title: "Personal Development Cohorts",
-    desc: "Growth through shared learning and connection.",
-  },
-  {
-    slug: "leadership-circles",
-    title: "Leadership Circles",
-    desc: "Peer learning and reflection for leaders.",
-  },
-  {
-    slug: "parenthood-transitions",
-    title: "Parenthood Transitions Masterclass",
-    desc: "Navigating the psychological shifts of parenthood.",
-  },
-  {
-    slug: "adolescence-transitions",
-    title: "Adolescence Transitions Program",
-    desc: "Supporting young people through identity and growth.",
-  },
-  {
-    slug: "360living-woman-code",
-    title: "The 360Living Woman Code",
-    desc: "A program dedicated to the journey and power of women.",
-  },
-]
 
-// ── TEAM ─────────────────────────────────────────────────────
-export const team = [
-  {
-    name: "Rev. (Mrs.) Angela Carmen Appiah",
-    role: "Board Chairperson",
-    org: "Chief Executive Officer, African Corporate Governance Network (ACGN)",
-    bio: [
-      "Rev. (Mrs.) Angela Carmen Appiah is a transformative leader and a pioneering force in African governance, serving as the first female Chief Executive Officer of the African Corporate Governance Network (ACGN).",
-      "A historic leader, she is also the first female past President and Chair of the 10th Governing Council of the Institute of Directors-Ghana (IoD-Gh).",
-      "With nearly three decades of experience, she uniquely integrates deep healthcare expertise as a Nurse Practitioner, Lecturer, and former Assistant Registrar at Ghana's Nursing and Midwifery Council of Ghana with elite governance practice.",
-      "An advocate for ethical leadership and boardroom diversity, she holds an MSc in Advanced Practice from Cardiff University, UK and is pursuing a Doctorate in Business Leadership with IPAG Business School France. A Fellow of IoD-Gh and recipient of the 2025 Ghana Women of Excellence Gold Award.",
-    ],
-    credentials: [
-      "MSc in Advanced Practice — Cardiff University, UK",
-      "Doctorate in Business Leadership (in progress) — IPAG Business School, France",
-      "Fellow, Institute of Directors-Ghana (IoD-Gh)",
-      "2025 Ghana Women of Excellence Gold Award",
-    ],
-  },
-  {
-    name: "Seyram Kodzo Mankra",
-    role: "Board Member",
-    org: "Corporate Governance & Board Advisory Specialist",
-    bio: [
-      "Seyram Kodzo Mankra is a corporate governance professional and board advisory specialist with over two decades of experience supporting boards and executive leadership teams.",
-      "He currently serves as Head of Marketing, External Relations, and the Centre for Corporate Governance Excellence (CCGE) at the Institute of Directors-Ghana, leading External Board Evaluations, governance diagnostics, director training, and advisory engagements.",
-      "Through the Centre for Corporate Governance Excellence, Seyram works directly with boards to assess governance maturity, refine committee structures, improve performance evaluation systems, and align board strategy with long-term institutional sustainability.",
-      "His governance perspective is reinforced by a strong foundation in strategic research, stakeholder engagement, and organisational performance analysis across West and Central Africa.",
-    ],
-    credentials: [
-      "MA in Organisational Leadership and Governance — University of Ghana",
-      "Certificate in Corporate Governance — Institute of Directors-Ghana",
-      "BA in Political Science & Religion — University of Ghana",
-      "Member, Institute of Directors-Ghana",
-    ],
-    expertise: [
-      "External Board Evaluations",
-      "Governance Framework Review & Strengthening",
-      "Board Strategy & Oversight Effectiveness",
-      "Risk Governance & Accountability Systems",
-      "ESG Awareness & Sustainability Governance",
-      "Director Capacity Building & Facilitation",
+  cta: {
+    eyebrow: 'Next Step',
+    title: 'Not sure which programme fits you?',
+    intro:
+      'Tell us a little about your goals — we will guide you to the right opportunity or partnership pathway.',
+    primary: { label: 'Apply Now', href: '/get-involved#apply' },
+    secondary: { label: 'Contact Us', href: '/contact' },
+    cards: [
+      {
+        title: 'Apply with ease',
+        desc: 'Share your interest online — we will follow up with next steps.',
+      },
+      {
+        title: 'Partnerships welcome',
+        desc: 'Corporates, NGOs, schools, and faith communities — let us collaborate.',
+      },
+      {
+        title: 'Designed for impact',
+        desc: 'Practical tools you can use long after the programme ends.',
+      },
     ],
   },
-  {
-    name: "Selasi Doku (Mrs.)",
-    role: "Executive Director / CEO",
-    org: "MIoD-GH | Counselling Psychologist | Life Strategist | Speaker",
-    bio: [
-      "Selasi Doku is a counselling psychologist, life strategist, and systems builder dedicated to one core mission: helping people gain insight into their lives so they can transition intentionally and thrive.",
-      "Her journey began in communication design and marketing, where she learned to strategically position ideas and influence perceptions. Over time, she discovered a deeper need — not just for better communication, but for a more profound understanding of human behaviour and life patterns.",
-      "This realisation led her to counselling psychology, where she identified a significant gap: many individuals struggle not because of a lack of capability, but because they lack clarity about their current life stage — igniting her interest in life transition psychology.",
-      "As Executive Director of the 360 Living Institute and CEO of Medfocus International, she has dedicated herself to transforming lives through mental well-being, personal development, and increased access to care.",
-    ],
-    credentials: [
-      "MA in Guidance and Counselling",
-      "Postgraduate Certificate in Psychology",
-      "Training in Trauma-Informed Care",
-      "Executive Certificate in Counselling",
-      "Certificate — Women Entrepreneurship & Leadership for Africa Program (WELA), CEIBS",
-      "Most Promising Alumnus 2025 — CEIBS WELA Program",
-      "Executive Certificate in Management",
-      "Member, Institute of Directors-Ghana (MIoD-GH)",
-      "Member, Ghana National Association of Certificated Counsellors (GNACC)",
-      "Chairperson, Continuing Professional Development Committee — GNACC",
-      "Member, Ghana Psychological Association (GPA)",
-    ],
+} as const
+
+// ── GET INVOLVED ─────────────────────────────────────────────
+export const getInvolved = {
+  hero: {
+    eyebrow: 'Get Involved',
+    title: 'Join the movement for mental empowerment',
+    intro:
+      'Take the first step toward your transformation journey — as a participant, partner, volunteer, or sponsor.',
   },
-]
+
+  joinPrograms: {
+    title: 'Join Our Programs',
+    body: 'Take the first step toward your transformation journey.',
+    cta: { label: 'Apply Now', href: '/get-involved#apply' },
+  },
+
+  partner: {
+    title: 'Partner With Us',
+    intro: 'We collaborate with:',
+    bullets: ['Corporates', 'NGOs', 'Faith-based organisations', 'Educational institutions'],
+    closing: 'Let’s work together to transform our community.',
+    cta: { label: 'Become a Partner', href: '/contact#partner' },
+  },
+
+  volunteer: {
+    title: 'Volunteer',
+    body: 'Be part of a movement changing lives.',
+    cta: { label: 'Sign Up to Volunteer', href: '/contact#volunteer' },
+  },
+
+  sponsor: {
+    title: 'Sponsor a Program',
+    body: 'Support individuals who need access to transformation opportunities.',
+    cta: { label: 'Sponsor Now', href: '/contact#sponsor' },
+  },
+
+  donate: {
+    title: 'Donate',
+    body: 'Support the transformation of lives and communities.',
+    cta: { label: 'Donate', href: '/contact#donate' },
+  },
+
+  apply: {
+    id: 'apply',
+    title: 'Apply for a Program',
+    body: 'Ready to join? Send us a message with your name, email, and the programme you are interested in — or use the general contact form.',
+    primaryCta: { label: 'Go to contact form', href: '/contact' },
+  },
+} as const
+
+// ── RESOURCES ────────────────────────────────────────────────
+export const resourcesPage = {
+  eyebrow: 'Resources',
+  title: 'Insights for Everyday Living',
+  intro: 'Explore articles, tools, and resources on:',
+  topics: [
+    'Mental health',
+    'Personal development',
+    'Relationships',
+    'Life transitions',
+    'Understanding Life Transitions',
+    'Mental Health in the Workplace',
+    'Parenting in Today’s World',
+    'Emotional Intelligence',
+  ],
+  placeholderNote:
+    'Resource articles are coming soon. In the meantime, follow our updates or reach out for programme information.',
+} as const
+
+// ── SUCCESS STORIES ───────────────────────────────────────────
+export const successStoriesPage = {
+  title: 'Success Stories',
+  intro: 'Stories from participants will appear here as we collect and publish them with consent.',
+  placeholder: homepage.testimonials.items[0],
+} as const
+
+// ── CONTACT PAGE ─────────────────────────────────────────────
+export const contactPage = {
+  hero: {
+    titleLines: ['We’d love to', 'hear from', 'you'],
+    intro:
+      'Whether you want to apply, partner, volunteer, sponsor, donate, or ask a question — send us a message and we will respond.',
+    email: company.email,
+    phone: company.phone,
+    address: company.address,
+  },
+
+  intents: [
+    {
+      href: '/get-involved#apply',
+      title: 'Apply for a Program',
+      desc: 'Start your transformation journey with us',
+    },
+    {
+      href: '/contact#partner',
+      title: 'Partner With Us',
+      desc: 'Organisations, NGOs, schools, and faith communities',
+    },
+    {
+      href: '/contact#volunteer',
+      title: 'Volunteer',
+      desc: 'Serve with us in the community',
+    },
+    {
+      href: '/contact#sponsor',
+      title: 'Sponsor a Program',
+      desc: 'Fund access for those who need it most',
+    },
+    {
+      href: '/contact#donate',
+      title: 'Donate',
+      desc: 'Support transformation in communities',
+    },
+  ] as const,
+} as const

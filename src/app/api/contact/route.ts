@@ -8,7 +8,7 @@ import { sanitizeEmail, sanitizeLongText, sanitizePhone, sanitizeString } from '
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 /** Inbox for all website contact form submissions */
-const CONTACT_INBOX = process.env.CONTACT_FORM_EMAIL?.trim() || '360livinginstitute@gmail.com'
+const CONTACT_INBOX = process.env.CONTACT_FORM_EMAIL?.trim() || 'info@360livingfoundation.org'
 
 function escapeHtml(s: string) {
   return s
